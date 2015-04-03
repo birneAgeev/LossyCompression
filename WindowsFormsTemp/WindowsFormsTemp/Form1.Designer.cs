@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsTemp
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Требуется переменная конструктора.
@@ -44,7 +44,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.shiftButton = new System.Windows.Forms.Button();
+            this.saveImageButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.currentPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.initialPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uTrackBar)).BeginInit();
@@ -58,9 +59,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.currentPictureBox.Location = new System.Drawing.Point(575, 35);
+            this.currentPictureBox.MaximumSize = new System.Drawing.Size(768, 768);
+            this.currentPictureBox.MinimumSize = new System.Drawing.Size(256, 256);
             this.currentPictureBox.Name = "currentPictureBox";
             this.currentPictureBox.Size = new System.Drawing.Size(256, 256);
-            this.currentPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.currentPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.currentPictureBox.TabIndex = 0;
             this.currentPictureBox.TabStop = false;
             // 
@@ -70,9 +73,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.initialPictureBox.Location = new System.Drawing.Point(12, 35);
+            this.initialPictureBox.MaximumSize = new System.Drawing.Size(768, 768);
+            this.initialPictureBox.MinimumSize = new System.Drawing.Size(256, 256);
             this.initialPictureBox.Name = "initialPictureBox";
             this.initialPictureBox.Size = new System.Drawing.Size(256, 256);
-            this.initialPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.initialPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.initialPictureBox.TabIndex = 1;
             this.initialPictureBox.TabStop = false;
             // 
@@ -152,9 +157,9 @@
             this.yuvCheckBox.AutoSize = true;
             this.yuvCheckBox.Location = new System.Drawing.Point(623, 388);
             this.yuvCheckBox.Name = "yuvCheckBox";
-            this.yuvCheckBox.Size = new System.Drawing.Size(109, 17);
+            this.yuvCheckBox.Size = new System.Drawing.Size(117, 17);
             this.yuvCheckBox.TabIndex = 11;
-            this.yuvCheckBox.Text = "Enable YUV Filter";
+            this.yuvCheckBox.Text = "Enable YCrCb Filter";
             this.yuvCheckBox.UseVisualStyleBackColor = true;
             this.yuvCheckBox.CheckedChanged += new System.EventHandler(this.yuvCheckBox_CheckedChanged);
             // 
@@ -215,23 +220,36 @@
             this.label8.TabIndex = 17;
             this.label8.Text = "V";
             // 
-            // button1
+            // shiftButton
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(422, 157);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(28, 24);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "<-";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.shiftButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.shiftButton.Location = new System.Drawing.Point(422, 157);
+            this.shiftButton.Name = "shiftButton";
+            this.shiftButton.Size = new System.Drawing.Size(28, 24);
+            this.shiftButton.TabIndex = 18;
+            this.shiftButton.Text = "<-";
+            this.shiftButton.UseVisualStyleBackColor = true;
+            this.shiftButton.Click += new System.EventHandler(this.shiftButton_Click);
             // 
-            // Form1
+            // saveImageButton
+            // 
+            this.saveImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.saveImageButton.Location = new System.Drawing.Point(756, 350);
+            this.saveImageButton.Name = "saveImageButton";
+            this.saveImageButton.Size = new System.Drawing.Size(75, 23);
+            this.saveImageButton.TabIndex = 19;
+            this.saveImageButton.Text = "Save Image";
+            this.saveImageButton.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.saveImageButton.UseVisualStyleBackColor = true;
+            this.saveImageButton.Click += new System.EventHandler(this.saveImageButton_Click);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 509);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.saveImageButton);
+            this.Controls.Add(this.shiftButton);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -247,8 +265,10 @@
             this.Controls.Add(this.uTrackBar);
             this.Controls.Add(this.initialPictureBox);
             this.Controls.Add(this.currentPictureBox);
-            this.Name = "Form1";
+            this.MinimumSize = new System.Drawing.Size(859, 547);
+            this.Name = "MainForm";
             this.Text = "Form1";
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.currentPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.initialPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uTrackBar)).EndInit();
@@ -277,7 +297,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button shiftButton;
+        private System.Windows.Forms.Button saveImageButton;
     }
 }
 

@@ -117,4 +117,10 @@
   <data name="Form1_LoadImageButton_Click_Open_image" xml:space="preserve">
     <value>Open image</value>
   </data>
+  <data name="MainForm_saveImageButton_Click_Save_image" xml:space="preserve">
+    <value>Save image</value>
+  </data>
+  <data name="MainForm_saveImageButton_Click_bmp_files____bmp____bmp_All_files__________" xml:space="preserve">
+    <value>bmp files (*.bmp)|*.bmp|All files (*.*)|*.*</value>
+  </data>
 </root>

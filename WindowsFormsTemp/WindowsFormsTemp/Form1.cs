@@ -9,13 +9,13 @@ using WindowsFormsTemp.Properties;
 
 namespace WindowsFormsTemp
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private const string DefaultImagePath = "ImageData/image_Lena256gb.bmp";
         private IBitmap currentPlainBitmap;
         private IBitmap initialPlainBitmap;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             initialPlainBitmap = new Bitmap(DefaultImagePath).ToPlainBitmap();
@@ -66,11 +66,11 @@ namespace WindowsFormsTemp
         private void UpdateScrollsState()
         {
             currentPlainBitmap = initialPlainBitmap.Apply(YuvFilter.Instance, new YuvData
-            {
-                YQuantizationDegree = (byte) yTrackBar.Value,
-                UQuantizationDegree = (byte) uTrackBar.Value,
-                VQuantizationDegree = (byte) vTrackBar.Value,
-            });
+                {
+                    YQuantizationDegree = (byte) yTrackBar.Value,
+                    UQuantizationDegree = (byte) uTrackBar.Value,
+                    VQuantizationDegree = (byte) vTrackBar.Value,
+                });
             UpdateState();
         }
 
@@ -80,7 +80,7 @@ namespace WindowsFormsTemp
             currentPictureBox.Image = currentPlainBitmap.ToDotNetBitmap();
 
             string psnrText = PsnrCalculator.Instance.Calculate(initialPlainBitmap, currentPlainBitmap)
-                .ToString("F3", CultureInfo.InvariantCulture);
+                                            .ToString("F3", CultureInfo.InvariantCulture);
 
             if (psnrText == "Infinity")
             {
@@ -101,11 +101,11 @@ namespace WindowsFormsTemp
             if (yuvCheckBox.Checked)
             {
                 currentPlainBitmap = initialPlainBitmap.Apply(YuvFilter.Instance, new YuvData
-                {
-                    YQuantizationDegree = (byte) yTrackBar.Value,
-                    UQuantizationDegree = (byte) uTrackBar.Value,
-                    VQuantizationDegree = (byte) vTrackBar.Value,
-                });
+                    {
+                        YQuantizationDegree = (byte) yTrackBar.Value,
+                        UQuantizationDegree = (byte) uTrackBar.Value,
+                        VQuantizationDegree = (byte) vTrackBar.Value,
+                    });
 
                 yTrackBar.Enabled = true;
                 uTrackBar.Enabled = true;
@@ -129,10 +129,42 @@ namespace WindowsFormsTemp
             UpdateCheckBox();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void shiftButton_Click(object sender, EventArgs e)
         {
             initialPlainBitmap = currentPlainBitmap;
             UpdateCheckBox();
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            int size = Math.Min(Size.Width*256/859, Size.Height*256/547);
+            currentPictureBox.Size = new Size(size, size);
+            initialPictureBox.Size = new Size(size, size);
+
+            initialPictureBox.Location = new Point(12, 35);
+            currentPictureBox.Location = new Point(Size.Width - 25 - currentPictureBox.Size.Width, 35);
+
+            shiftButton.Location =
+                new Point(
+                    (initialPictureBox.Location.X + currentPictureBox.Location.X + currentPictureBox.Size.Width)/2 -
+                    shiftButton.Size.Width/2,
+                    (initialPictureBox.Location.Y + currentPictureBox.Location.Y + currentPictureBox.Size.Height)/2 -
+                    shiftButton.Size.Height/2);
+        }
+
+        private void saveImageButton_Click(object sender, EventArgs e)
+        {
+            using (var fileDialog = new SaveFileDialog())
+            {
+                fileDialog.FileName = "bitmap.bmp";
+                fileDialog.Filter = Resources.MainForm_saveImageButton_Click_bmp_files____bmp____bmp_All_files__________;
+                fileDialog.Title = Resources.MainForm_saveImageButton_Click_Save_image;
+
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    currentPlainBitmap.ToDotNetBitmap().Save(fileDialog.FileName);
+                }
+            }
         }
     }
 }
