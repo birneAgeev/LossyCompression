@@ -47,15 +47,27 @@
             this.shiftButton = new System.Windows.Forms.Button();
             this.saveImageButton = new System.Windows.Forms.Button();
             this.grayscaleBox = new System.Windows.Forms.GroupBox();
-            this.equalWeightRadioButton = new System.Windows.Forms.RadioButton();
             this.ccir6011RadioButton = new System.Windows.Forms.RadioButton();
+            this.equalWeightRadioButton = new System.Windows.Forms.RadioButton();
             this.grayscaleCheckBox = new System.Windows.Forms.CheckBox();
+            this.lbgCheckbox = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lbgNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.currentPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.initialPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vTrackBar)).BeginInit();
             this.grayscaleBox.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lbgNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // currentPictureBox
@@ -90,7 +102,7 @@
             // 
             this.uTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.uTrackBar.Enabled = false;
-            this.uTrackBar.Location = new System.Drawing.Point(360, 388);
+            this.uTrackBar.Location = new System.Drawing.Point(141, 97);
             this.uTrackBar.Maximum = 8;
             this.uTrackBar.Name = "uTrackBar";
             this.uTrackBar.Size = new System.Drawing.Size(127, 45);
@@ -102,7 +114,7 @@
             // 
             this.yTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.yTrackBar.Enabled = false;
-            this.yTrackBar.Location = new System.Drawing.Point(360, 328);
+            this.yTrackBar.Location = new System.Drawing.Point(8, 97);
             this.yTrackBar.Maximum = 8;
             this.yTrackBar.Name = "yTrackBar";
             this.yTrackBar.Size = new System.Drawing.Size(127, 45);
@@ -114,7 +126,7 @@
             // 
             this.vTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.vTrackBar.Enabled = false;
-            this.vTrackBar.Location = new System.Drawing.Point(360, 453);
+            this.vTrackBar.Location = new System.Drawing.Point(264, 97);
             this.vTrackBar.Maximum = 8;
             this.vTrackBar.Name = "vTrackBar";
             this.vTrackBar.Size = new System.Drawing.Size(127, 45);
@@ -160,7 +172,7 @@
             // 
             this.yuvCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.yuvCheckBox.AutoSize = true;
-            this.yuvCheckBox.Location = new System.Drawing.Point(601, 328);
+            this.yuvCheckBox.Location = new System.Drawing.Point(8, 35);
             this.yuvCheckBox.Name = "yuvCheckBox";
             this.yuvCheckBox.Size = new System.Drawing.Size(117, 17);
             this.yuvCheckBox.TabIndex = 11;
@@ -172,25 +184,27 @@
             // 
             this.yLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.yLabel.AutoSize = true;
-            this.yLabel.Location = new System.Drawing.Point(493, 328);
+            this.yLabel.Location = new System.Drawing.Point(62, 145);
             this.yLabel.Name = "yLabel";
             this.yLabel.Size = new System.Drawing.Size(0, 13);
             this.yLabel.TabIndex = 12;
+            this.yLabel.Click += new System.EventHandler(this.yLabel_Click);
             // 
             // uLabel
             // 
             this.uLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.uLabel.AutoSize = true;
-            this.uLabel.Location = new System.Drawing.Point(493, 388);
+            this.uLabel.Location = new System.Drawing.Point(194, 145);
             this.uLabel.Name = "uLabel";
             this.uLabel.Size = new System.Drawing.Size(0, 13);
             this.uLabel.TabIndex = 13;
+            this.uLabel.Click += new System.EventHandler(this.uLabel_Click);
             // 
             // vLabel
             // 
             this.vLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.vLabel.AutoSize = true;
-            this.vLabel.Location = new System.Drawing.Point(493, 453);
+            this.vLabel.Location = new System.Drawing.Point(320, 145);
             this.vLabel.Name = "vLabel";
             this.vLabel.Size = new System.Drawing.Size(0, 13);
             this.vLabel.TabIndex = 14;
@@ -199,7 +213,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(357, 312);
+            this.label6.Location = new System.Drawing.Point(5, 81);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(14, 13);
             this.label6.TabIndex = 15;
@@ -209,21 +223,21 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(357, 372);
+            this.label7.Location = new System.Drawing.Point(138, 81);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(15, 13);
+            this.label7.Size = new System.Drawing.Size(17, 13);
             this.label7.TabIndex = 16;
-            this.label7.Text = "U";
+            this.label7.Text = "Cr";
             // 
             // label8
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(357, 437);
+            this.label8.Location = new System.Drawing.Point(261, 81);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(14, 13);
+            this.label8.Size = new System.Drawing.Size(20, 13);
             this.label8.TabIndex = 17;
-            this.label8.Text = "V";
+            this.label8.Text = "Cb";
             // 
             // shiftButton
             // 
@@ -253,25 +267,12 @@
             this.grayscaleBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.grayscaleBox.Controls.Add(this.ccir6011RadioButton);
             this.grayscaleBox.Controls.Add(this.equalWeightRadioButton);
-            this.grayscaleBox.Location = new System.Drawing.Point(575, 388);
+            this.grayscaleBox.Location = new System.Drawing.Point(21, 49);
             this.grayscaleBox.Name = "grayscaleBox";
             this.grayscaleBox.Size = new System.Drawing.Size(200, 100);
             this.grayscaleBox.TabIndex = 20;
             this.grayscaleBox.TabStop = false;
             this.grayscaleBox.Text = "Grayscale Settings";
-            // 
-            // equalWeightRadioButton
-            // 
-            this.equalWeightRadioButton.AutoSize = true;
-            this.equalWeightRadioButton.Enabled = false;
-            this.equalWeightRadioButton.Location = new System.Drawing.Point(26, 28);
-            this.equalWeightRadioButton.Name = "equalWeightRadioButton";
-            this.equalWeightRadioButton.Size = new System.Drawing.Size(94, 17);
-            this.equalWeightRadioButton.TabIndex = 0;
-            this.equalWeightRadioButton.TabStop = true;
-            this.equalWeightRadioButton.Text = "Equal Weights";
-            this.equalWeightRadioButton.UseVisualStyleBackColor = true;
-            this.equalWeightRadioButton.CheckedChanged += new System.EventHandler(this.equalWeightRadioButton_CheckedChanged);
             // 
             // ccir6011RadioButton
             // 
@@ -286,11 +287,24 @@
             this.ccir6011RadioButton.UseVisualStyleBackColor = true;
             this.ccir6011RadioButton.CheckedChanged += new System.EventHandler(this.ccir6011RadioButton_CheckedChanged);
             // 
+            // equalWeightRadioButton
+            // 
+            this.equalWeightRadioButton.AutoSize = true;
+            this.equalWeightRadioButton.Enabled = false;
+            this.equalWeightRadioButton.Location = new System.Drawing.Point(26, 28);
+            this.equalWeightRadioButton.Name = "equalWeightRadioButton";
+            this.equalWeightRadioButton.Size = new System.Drawing.Size(94, 17);
+            this.equalWeightRadioButton.TabIndex = 0;
+            this.equalWeightRadioButton.TabStop = true;
+            this.equalWeightRadioButton.Text = "Equal Weights";
+            this.equalWeightRadioButton.UseVisualStyleBackColor = true;
+            this.equalWeightRadioButton.CheckedChanged += new System.EventHandler(this.equalWeightRadioButton_CheckedChanged);
+            // 
             // grayscaleCheckBox
             // 
             this.grayscaleCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.grayscaleCheckBox.AutoSize = true;
-            this.grayscaleCheckBox.Location = new System.Drawing.Point(601, 356);
+            this.grayscaleCheckBox.Location = new System.Drawing.Point(21, 15);
             this.grayscaleCheckBox.Name = "grayscaleCheckBox";
             this.grayscaleCheckBox.Size = new System.Drawing.Size(134, 17);
             this.grayscaleCheckBox.TabIndex = 21;
@@ -298,28 +312,119 @@
             this.grayscaleCheckBox.UseVisualStyleBackColor = true;
             this.grayscaleCheckBox.CheckedChanged += new System.EventHandler(this.grayscaleCheckBox_CheckedChanged);
             // 
+            // lbgCheckbox
+            // 
+            this.lbgCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbgCheckbox.AutoSize = true;
+            this.lbgCheckbox.Location = new System.Drawing.Point(19, 31);
+            this.lbgCheckbox.Name = "lbgCheckbox";
+            this.lbgCheckbox.Size = new System.Drawing.Size(83, 17);
+            this.lbgCheckbox.TabIndex = 22;
+            this.lbgCheckbox.Text = "Enable LBG";
+            this.lbgCheckbox.UseVisualStyleBackColor = true;
+            this.lbgCheckbox.CheckedChanged += new System.EventHandler(this.lbgCheckbox_CheckedChanged);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.tabControl1.Location = new System.Drawing.Point(320, 297);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(415, 200);
+            this.tabControl1.TabIndex = 23;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.yTrackBar);
+            this.tabPage1.Controls.Add(this.uTrackBar);
+            this.tabPage1.Controls.Add(this.vTrackBar);
+            this.tabPage1.Controls.Add(this.yLabel);
+            this.tabPage1.Controls.Add(this.uLabel);
+            this.tabPage1.Controls.Add(this.vLabel);
+            this.tabPage1.Controls.Add(this.yuvCheckBox);
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(407, 174);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "YCrCb";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.grayscaleBox);
+            this.tabPage2.Controls.Add(this.grayscaleCheckBox);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(407, 174);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Grayscale";
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage3.Controls.Add(this.label1);
+            this.tabPage3.Controls.Add(this.lbgNumericUpDown);
+            this.tabPage3.Controls.Add(this.lbgCheckbox);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(407, 174);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "LBG";
+            // 
+            // lbgNumericUpDown
+            // 
+            this.lbgNumericUpDown.Enabled = false;
+            this.lbgNumericUpDown.Location = new System.Drawing.Point(19, 92);
+            this.lbgNumericUpDown.Maximum = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.lbgNumericUpDown.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.lbgNumericUpDown.Name = "lbgNumericUpDown";
+            this.lbgNumericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.lbgNumericUpDown.TabIndex = 23;
+            this.lbgNumericUpDown.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.lbgNumericUpDown.ValueChanged += new System.EventHandler(this.lbgNumericUpDown_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 76);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(76, 13);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "Colors Number";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 509);
-            this.Controls.Add(this.grayscaleCheckBox);
-            this.Controls.Add(this.grayscaleBox);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.saveImageButton);
             this.Controls.Add(this.shiftButton);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.vLabel);
-            this.Controls.Add(this.uLabel);
-            this.Controls.Add(this.yLabel);
-            this.Controls.Add(this.yuvCheckBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.psnrLabel);
             this.Controls.Add(this.LoadImageButton);
-            this.Controls.Add(this.vTrackBar);
-            this.Controls.Add(this.yTrackBar);
-            this.Controls.Add(this.uTrackBar);
             this.Controls.Add(this.initialPictureBox);
             this.Controls.Add(this.currentPictureBox);
             this.MinimumSize = new System.Drawing.Size(859, 547);
@@ -333,6 +438,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.vTrackBar)).EndInit();
             this.grayscaleBox.ResumeLayout(false);
             this.grayscaleBox.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lbgNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -362,6 +475,13 @@
         private System.Windows.Forms.RadioButton ccir6011RadioButton;
         private System.Windows.Forms.RadioButton equalWeightRadioButton;
         private System.Windows.Forms.CheckBox grayscaleCheckBox;
+        private System.Windows.Forms.CheckBox lbgCheckbox;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown lbgNumericUpDown;
     }
 }
 

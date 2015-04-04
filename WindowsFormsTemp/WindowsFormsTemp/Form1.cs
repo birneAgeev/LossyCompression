@@ -93,6 +93,21 @@ namespace WindowsFormsTemp
         private void UpdateCheckBox()
         {
             currentPlainBitmap = initialPlainBitmap;
+
+            if (lbgCheckbox.Checked)
+            {
+                lbgNumericUpDown.Enabled = true;
+                currentPlainBitmap = currentPlainBitmap.Apply(VectorQuantizationFilter.Instance,
+                                                              new VectorQuantizationData
+                                                                  {
+                                                                      PaleteSize = (int) lbgNumericUpDown.Value
+                                                                  });
+            }
+            else
+            {
+                lbgNumericUpDown.Enabled = false;
+            }
+
             if (grayscaleCheckBox.Checked)
             {
                 equalWeightRadioButton.Enabled = true;
@@ -178,6 +193,8 @@ namespace WindowsFormsTemp
 
         private void grayscaleCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            if (grayscaleCheckBox.Checked)
+                ccir6011RadioButton.Checked = true;
             UpdateCheckBox();
         }
 
@@ -187,6 +204,26 @@ namespace WindowsFormsTemp
         }
 
         private void ccir6011RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void lbgCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void yLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void uLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbgNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             UpdateCheckBox();
         }
