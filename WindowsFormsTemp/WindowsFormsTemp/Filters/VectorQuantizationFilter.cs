@@ -79,7 +79,9 @@ namespace WindowsFormsTemp.Filters
                                                  .Select(
                                                      column =>
                                                      image.GetPixel(row, column)))
+                                   .AsParallel()
                                    .GroupBy(pixel => GetNearest(pixel, oldPalete))
+                                   .AsParallel()
                                    .Select(GetCentroid)
                                    .ToList();
                 double currentDistortion = CalculateAverageDistortion(image, palete);
@@ -95,11 +97,23 @@ namespace WindowsFormsTemp.Filters
         {
             var rgbColors = @group as IList<RgbColor> ?? @group.ToList();
             int groupSize = rgbColors.Count();
+
+            var sumR = 0;
+            var sumG = 0;
+            var sumB = 0;
+
+            foreach (var color in rgbColors)
+            {
+                sumR += color.R;
+                sumG += color.G;
+                sumB += color.B;
+            }
+
             return new RgbColor
                 {
-                    R = (byte) (rgbColors.Select(color => (int) color.R).Sum()/groupSize),
-                    G = (byte) (rgbColors.Select(color => (int) color.G).Sum()/groupSize),
-                    B = (byte) (rgbColors.Select(color => (int) color.B).Sum()/groupSize),
+                    R = (byte) (sumR/groupSize),
+                    G = (byte) (sumG/groupSize),
+                    B = (byte) (sumB/groupSize),
                 };
         }
 
