@@ -46,11 +46,16 @@
             this.label8 = new System.Windows.Forms.Label();
             this.shiftButton = new System.Windows.Forms.Button();
             this.saveImageButton = new System.Windows.Forms.Button();
+            this.grayscaleBox = new System.Windows.Forms.GroupBox();
+            this.equalWeightRadioButton = new System.Windows.Forms.RadioButton();
+            this.ccir6011RadioButton = new System.Windows.Forms.RadioButton();
+            this.grayscaleCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.currentPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.initialPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vTrackBar)).BeginInit();
+            this.grayscaleBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // currentPictureBox
@@ -155,7 +160,7 @@
             // 
             this.yuvCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.yuvCheckBox.AutoSize = true;
-            this.yuvCheckBox.Location = new System.Drawing.Point(623, 388);
+            this.yuvCheckBox.Location = new System.Drawing.Point(601, 328);
             this.yuvCheckBox.Name = "yuvCheckBox";
             this.yuvCheckBox.Size = new System.Drawing.Size(117, 17);
             this.yuvCheckBox.TabIndex = 11;
@@ -243,11 +248,63 @@
             this.saveImageButton.UseVisualStyleBackColor = true;
             this.saveImageButton.Click += new System.EventHandler(this.saveImageButton_Click);
             // 
+            // grayscaleBox
+            // 
+            this.grayscaleBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.grayscaleBox.Controls.Add(this.ccir6011RadioButton);
+            this.grayscaleBox.Controls.Add(this.equalWeightRadioButton);
+            this.grayscaleBox.Location = new System.Drawing.Point(575, 388);
+            this.grayscaleBox.Name = "grayscaleBox";
+            this.grayscaleBox.Size = new System.Drawing.Size(200, 100);
+            this.grayscaleBox.TabIndex = 20;
+            this.grayscaleBox.TabStop = false;
+            this.grayscaleBox.Text = "Grayscale Settings";
+            // 
+            // equalWeightRadioButton
+            // 
+            this.equalWeightRadioButton.AutoSize = true;
+            this.equalWeightRadioButton.Enabled = false;
+            this.equalWeightRadioButton.Location = new System.Drawing.Point(26, 28);
+            this.equalWeightRadioButton.Name = "equalWeightRadioButton";
+            this.equalWeightRadioButton.Size = new System.Drawing.Size(94, 17);
+            this.equalWeightRadioButton.TabIndex = 0;
+            this.equalWeightRadioButton.TabStop = true;
+            this.equalWeightRadioButton.Text = "Equal Weights";
+            this.equalWeightRadioButton.UseVisualStyleBackColor = true;
+            this.equalWeightRadioButton.CheckedChanged += new System.EventHandler(this.equalWeightRadioButton_CheckedChanged);
+            // 
+            // ccir6011RadioButton
+            // 
+            this.ccir6011RadioButton.AutoSize = true;
+            this.ccir6011RadioButton.Enabled = false;
+            this.ccir6011RadioButton.Location = new System.Drawing.Point(26, 65);
+            this.ccir6011RadioButton.Name = "ccir6011RadioButton";
+            this.ccir6011RadioButton.Size = new System.Drawing.Size(80, 17);
+            this.ccir6011RadioButton.TabIndex = 1;
+            this.ccir6011RadioButton.TabStop = true;
+            this.ccir6011RadioButton.Text = "CCIR 601-1";
+            this.ccir6011RadioButton.UseVisualStyleBackColor = true;
+            this.ccir6011RadioButton.CheckedChanged += new System.EventHandler(this.ccir6011RadioButton_CheckedChanged);
+            // 
+            // grayscaleCheckBox
+            // 
+            this.grayscaleCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.grayscaleCheckBox.AutoSize = true;
+            this.grayscaleCheckBox.Location = new System.Drawing.Point(601, 356);
+            this.grayscaleCheckBox.Name = "grayscaleCheckBox";
+            this.grayscaleCheckBox.Size = new System.Drawing.Size(134, 17);
+            this.grayscaleCheckBox.TabIndex = 21;
+            this.grayscaleCheckBox.Text = "Enable Grayscale Filter";
+            this.grayscaleCheckBox.UseVisualStyleBackColor = true;
+            this.grayscaleCheckBox.CheckedChanged += new System.EventHandler(this.grayscaleCheckBox_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 509);
+            this.Controls.Add(this.grayscaleCheckBox);
+            this.Controls.Add(this.grayscaleBox);
             this.Controls.Add(this.saveImageButton);
             this.Controls.Add(this.shiftButton);
             this.Controls.Add(this.label8);
@@ -274,6 +331,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.uTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vTrackBar)).EndInit();
+            this.grayscaleBox.ResumeLayout(false);
+            this.grayscaleBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -299,6 +358,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button shiftButton;
         private System.Windows.Forms.Button saveImageButton;
+        private System.Windows.Forms.GroupBox grayscaleBox;
+        private System.Windows.Forms.RadioButton ccir6011RadioButton;
+        private System.Windows.Forms.RadioButton equalWeightRadioButton;
+        private System.Windows.Forms.CheckBox grayscaleCheckBox;
     }
 }
 

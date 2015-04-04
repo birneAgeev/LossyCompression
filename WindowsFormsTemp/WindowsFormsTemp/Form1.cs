@@ -65,13 +65,7 @@ namespace WindowsFormsTemp
 
         private void UpdateScrollsState()
         {
-            currentPlainBitmap = initialPlainBitmap.Apply(YuvFilter.Instance, new YuvData
-                {
-                    YQuantizationDegree = (byte) yTrackBar.Value,
-                    UQuantizationDegree = (byte) uTrackBar.Value,
-                    VQuantizationDegree = (byte) vTrackBar.Value,
-                });
-            UpdateState();
+            UpdateCheckBox();
         }
 
         private void UpdateState()
@@ -98,9 +92,28 @@ namespace WindowsFormsTemp
 
         private void UpdateCheckBox()
         {
+            currentPlainBitmap = initialPlainBitmap;
+            if (grayscaleCheckBox.Checked)
+            {
+                equalWeightRadioButton.Enabled = true;
+                ccir6011RadioButton.Enabled = true;
+
+                if (equalWeightRadioButton.Checked)
+                    currentPlainBitmap = currentPlainBitmap.Apply(GrayScaleFilter.EqualWeights);
+                if (ccir6011RadioButton.Checked)
+                    currentPlainBitmap = currentPlainBitmap.Apply(GrayScaleFilter.Ccir6011);
+            }
+            else
+            {
+                equalWeightRadioButton.Enabled = false;
+                ccir6011RadioButton.Enabled = false;
+                equalWeightRadioButton.Checked = false;
+                ccir6011RadioButton.Checked = false;
+            }
+
             if (yuvCheckBox.Checked)
             {
-                currentPlainBitmap = initialPlainBitmap.Apply(YuvFilter.Instance, new YuvData
+                currentPlainBitmap = currentPlainBitmap.Apply(YuvFilter.Instance, new YuvData
                     {
                         YQuantizationDegree = (byte) yTrackBar.Value,
                         UQuantizationDegree = (byte) uTrackBar.Value,
@@ -110,18 +123,14 @@ namespace WindowsFormsTemp
                 yTrackBar.Enabled = true;
                 uTrackBar.Enabled = true;
                 vTrackBar.Enabled = true;
-
-                UpdateState();
             }
             else
             {
                 yTrackBar.Enabled = false;
                 uTrackBar.Enabled = false;
                 vTrackBar.Enabled = false;
-
-                currentPlainBitmap = initialPlainBitmap;
-                UpdateState();
             }
+            UpdateState();
         }
 
         private void yuvCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -165,6 +174,21 @@ namespace WindowsFormsTemp
                     currentPlainBitmap.ToDotNetBitmap().Save(fileDialog.FileName);
                 }
             }
+        }
+
+        private void grayscaleCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void equalWeightRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void ccir6011RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
         }
     }
 }

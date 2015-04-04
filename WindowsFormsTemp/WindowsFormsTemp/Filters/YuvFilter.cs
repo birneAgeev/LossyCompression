@@ -40,18 +40,18 @@ namespace WindowsFormsTemp.Filters
         private RgbColor Transform(RgbColor pixel, YuvData yuvData)
         {
             var y = (int) Math.Round(0.299*pixel.R + 0.587*pixel.G + 0.114*pixel.B);
-            var u = (int) Math.Round(-0.14713*pixel.R - 0.28886*pixel.G + 0.436*pixel.B + 111.18);
-            var v = (int) Math.Round(0.615*pixel.R - 0.51499*pixel.G - 0.10001*pixel.B + 156.825);
+            var cr = (int) Math.Round(-0.1687*pixel.R - 0.3313*pixel.G + 0.5*pixel.B + 128.0);
+            var cb = (int) Math.Round(0.5*pixel.R - 0.4187*pixel.G - 0.0813*pixel.B + 128.0);
 
             y = QuantizationEffect(y, yuvData.YQuantizationDegree, 8);
-            u = QuantizationEffect(u, yuvData.UQuantizationDegree, 8);
-            v = QuantizationEffect(v, yuvData.VQuantizationDegree, 8);
+            cr = QuantizationEffect(cr, yuvData.UQuantizationDegree, 8);
+            cb = QuantizationEffect(cb, yuvData.VQuantizationDegree, 8);
 
             return new RgbColor
             {
-                R = ToByte(y + 1.13983*(v - 156.825)),
-                G = ToByte(y - 0.39465*(u - 111.18) - 0.58060*(v - 156.825)),
-                B = ToByte(y + 2.03211*(u - 111.18))
+                R = ToByte(y + 1.402*(cb - 128.0)),
+                G = ToByte(y - 0.34414*(cr - 128.0) - 0.71414*(cb - 128.0)),
+                B = ToByte(y + 1.772*(cr - 128.0))
             };
         }
 

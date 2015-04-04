@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Calculator\IMetricCalculator.cs" />
     <Compile Include="Calculator\PsnrCalculator.cs" />
+    <Compile Include="Filters\GrayScaleFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Filters\IFilterData.cs" />
     <Compile Include="Filters\YuvData.cs" />

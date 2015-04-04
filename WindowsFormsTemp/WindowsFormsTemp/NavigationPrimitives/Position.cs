@@ -5,6 +5,17 @@
         public int Row { get; set; }
         public int Column { get; set; }
 
+        public Position()
+        {
+            Row = Column = 0;
+        }
+
+        public Position(int row, int column)
+        {
+            Row = row;
+            Column = column;
+        }
+
         public IPosition Add(ISpan span)
         {
             return new Position
