@@ -55,8 +55,10 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.lbgNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.lbgNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.invertCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.currentPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.initialPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uTrackBar)).BeginInit();
@@ -68,6 +70,7 @@
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lbgNumericUpDown)).BeginInit();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // currentPictureBox
@@ -330,6 +333,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.tabControl1.Location = new System.Drawing.Point(320, 297);
             this.tabControl1.Name = "tabControl1";
@@ -381,6 +385,15 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "LBG";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 76);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(76, 13);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "Colors Number";
+            // 
             // lbgNumericUpDown
             // 
             this.lbgNumericUpDown.Enabled = false;
@@ -405,14 +418,27 @@
             0});
             this.lbgNumericUpDown.ValueChanged += new System.EventHandler(this.lbgNumericUpDown_ValueChanged);
             // 
-            // label1
+            // tabPage4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 76);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 13);
-            this.label1.TabIndex = 24;
-            this.label1.Text = "Colors Number";
+            this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage4.Controls.Add(this.invertCheckBox);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(407, 174);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Misc";
+            // 
+            // invertCheckBox
+            // 
+            this.invertCheckBox.AutoSize = true;
+            this.invertCheckBox.Location = new System.Drawing.Point(66, 59);
+            this.invertCheckBox.Name = "invertCheckBox";
+            this.invertCheckBox.Size = new System.Drawing.Size(53, 17);
+            this.invertCheckBox.TabIndex = 0;
+            this.invertCheckBox.Text = "Invert";
+            this.invertCheckBox.UseVisualStyleBackColor = true;
+            this.invertCheckBox.CheckedChanged += new System.EventHandler(this.invertCheckBox_CheckedChanged);
             // 
             // MainForm
             // 
@@ -446,6 +472,8 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lbgNumericUpDown)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -482,6 +510,8 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown lbgNumericUpDown;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.CheckBox invertCheckBox;
     }
 }
 

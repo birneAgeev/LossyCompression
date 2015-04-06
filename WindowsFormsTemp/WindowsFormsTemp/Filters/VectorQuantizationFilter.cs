@@ -20,9 +20,12 @@ namespace WindowsFormsTemp.Filters
 
             var vectorQuantizationData = filterData as VectorQuantizationData;
 
-            IBitmap result = new PlainBitmap(image.Width, image.Height);
-
             List<RgbColor> palete = GeneratePalete(image, vectorQuantizationData);
+
+            if (palete.Count() < vectorQuantizationData.PaleteSize)
+                return image;
+
+            IBitmap result = new PlainBitmap(image.Width, image.Height);
 
             for (int column = 0; column < image.Width; ++column)
             {
@@ -66,6 +69,9 @@ namespace WindowsFormsTemp.Filters
         private List<RgbColor> GeneratePalete(IBitmap image, VectorQuantizationData vectorQuantizationData)
         {
             List<RgbColor> palete = GetInitialPalete(image, vectorQuantizationData);
+
+            if (palete.Count() < vectorQuantizationData.PaleteSize)
+                return palete;
 
             double previousDistortion = CalculateAverageDistortion(image, palete);
 
@@ -160,19 +166,6 @@ namespace WindowsFormsTemp.Filters
                         R = (byte) (tuple.Item1 >> 16),
                         G = (byte) (tuple.Item1 << 16 >> 24),
                         B = (byte) (tuple.Item1 << 24 >> 24)
-                    };
-                palete.Add(color);
-                ++currentPaleteSize;
-            }
-
-            var rand = new Random(Environment.TickCount);
-            while (currentPaleteSize < vectorQuantizationData.PaleteSize)
-            {
-                var color = new RgbColor
-                    {
-                        R = (byte) rand.Next(256),
-                        G = (byte) rand.Next(256),
-                        B = (byte) rand.Next(256)
                     };
                 palete.Add(color);
                 ++currentPaleteSize;

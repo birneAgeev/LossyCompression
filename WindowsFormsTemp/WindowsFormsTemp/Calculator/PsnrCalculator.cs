@@ -35,7 +35,7 @@ namespace WindowsFormsTemp.Calculator
             return Math.Log10(Square(255)/meanSquareError)*10.0;
         }
 
-        private double Square(double a)
+        private static double Square(double a)
         {
             return a*a;
         }

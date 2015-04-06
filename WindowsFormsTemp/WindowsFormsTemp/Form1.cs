@@ -94,6 +94,9 @@ namespace WindowsFormsTemp
         {
             currentPlainBitmap = initialPlainBitmap;
 
+            if (invertCheckBox.Checked)
+                currentPlainBitmap = currentPlainBitmap.Apply(InversionFilter.Instance);
+
             if (lbgCheckbox.Checked)
             {
                 lbgNumericUpDown.Enabled = true;
@@ -224,6 +227,11 @@ namespace WindowsFormsTemp
         }
 
         private void lbgNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void invertCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             UpdateCheckBox();
         }

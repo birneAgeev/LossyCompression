@@ -51,6 +51,7 @@
     <Compile Include="Filters\GrayScaleFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Filters\IFilterData.cs" />
+    <Compile Include="Filters\InversionFilter.cs" />
     <Compile Include="Filters\VectorQuantizationData.cs" />
     <Compile Include="Filters\VectorQuantizationFilter.cs" />
     <Compile Include="Filters\YuvData.cs" />
