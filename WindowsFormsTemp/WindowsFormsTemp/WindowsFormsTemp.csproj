@@ -67,6 +67,11 @@
     <Compile Include="ImagePrimitives\IPixel.cs" />
     <Compile Include="ImagePrimitives\PlainBitmap.cs" />
     <Compile Include="ImagePrimitives\YCrCbPixel.cs" />
+    <Compile Include="Jpeg\IJpegThinner.cs" />
+    <Compile Include="Jpeg\JpegThinnerResult.cs" />
+    <Compile Include="Jpeg\SeparatedYCrCb.cs" />
+    <Compile Include="Jpeg\JpegThinner.cs" />
+    <Compile Include="Jpeg\ThinningMode.cs" />
     <Compile Include="NavigationPrimitives\IPosition.cs" />
     <Compile Include="NavigationPrimitives\ISpan.cs" />
     <Compile Include="NavigationPrimitives\Position.cs" />
@@ -105,6 +110,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

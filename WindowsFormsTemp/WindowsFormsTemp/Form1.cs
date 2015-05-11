@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using WindowsFormsTemp.Calculator;
 using WindowsFormsTemp.Filters;
 using WindowsFormsTemp.ImagePrimitives;
+using WindowsFormsTemp.Jpeg;
 using WindowsFormsTemp.Properties;
 
 namespace WindowsFormsTemp
@@ -93,6 +94,9 @@ namespace WindowsFormsTemp
         private void UpdateCheckBox()
         {
             currentPlainBitmap = initialPlainBitmap;
+
+            currentPlainBitmap =
+                JpegThinner.Instance.Decompress(JpegThinner.Instance.ThinOut(initialPlainBitmap, ThinningMode._2H2V)).ToRgbBitmap();
 
             if (invertCheckBox.Checked)
                 currentPlainBitmap = currentPlainBitmap.Apply(InversionFilter.Instance);
