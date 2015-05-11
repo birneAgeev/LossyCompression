@@ -22,13 +22,13 @@ namespace WindowsFormsTemp.ImagePrimitives
     {
         public static Bitmap ToDotNetBitmap(this IBitmap bitmap)
         {
-            IBitmap<RgbPixel> rgbBitmap = bitmap.ToRgbBitmap();
+            var rgbBitmap = bitmap.ToRgbBitmap();
             var result = new Bitmap(rgbBitmap.Width, rgbBitmap.Height);
-            for (int row = 0; row < rgbBitmap.Height; ++row)
+            for (var row = 0; row < rgbBitmap.Height; ++row)
             {
-                for (int column = 0; column < rgbBitmap.Width; ++column)
+                for (var column = 0; column < rgbBitmap.Width; ++column)
                 {
-                    RgbPixel pixel = rgbBitmap.GetPixel(new Position
+                    var pixel = rgbBitmap.GetPixel(new Position
                     {
                         Column = column,
                         Row = row

@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using WindowsFormsTemp.NavigationPrimitives;
+﻿using WindowsFormsTemp.NavigationPrimitives;
 
 namespace WindowsFormsTemp.ImagePrimitives
 {
@@ -40,11 +39,11 @@ namespace WindowsFormsTemp.ImagePrimitives
         public IBitmap<RgbPixel> ToRgbBitmap()
         {
             var result = new PlainBitmap<RgbPixel>(Width, Height);
-            for (int row = 0; row < Height; ++row)
+            for (var row = 0; row < Height; ++row)
             {
-                for (int column = 0; column < Width; ++column)
+                for (var column = 0; column < Width; ++column)
                 {
-                    RgbPixel pixel = GetPixel(new Position
+                    var pixel = GetPixel(new Position
                     {
                         Column = column,
                         Row = row

@@ -25,14 +25,14 @@ namespace WindowsFormsTemp.Filters
             if (!(image is IBitmap<RgbPixel>))
                 throw new ArgumentException("Image is not RGB.");
             var img = (IBitmap<RgbPixel>) image;
-            
+
             var result = new PlainBitmap<RgbPixel>(img.Width, img.Height);
 
             Parallel.For((long) 0, img.Width, column => Parallel.For((long) 0, img.Height, row =>
             {
                 var currentPosition = new Position((int) row, (int) column);
-                RgbPixel pixel = img.GetPixel(currentPosition);
-                byte value = GetGrayValue(pixel);
+                var pixel = img.GetPixel(currentPosition);
+                var value = GetGrayValue(pixel);
                 pixel = new RgbPixel
                 {
                     R = value,

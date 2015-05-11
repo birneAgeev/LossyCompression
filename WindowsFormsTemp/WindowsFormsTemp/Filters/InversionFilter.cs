@@ -22,7 +22,7 @@ namespace WindowsFormsTemp.Filters
 
             Parallel.For((long) 0, img.Width, column => Parallel.For((long) 0, img.Height, row =>
             {
-                RgbPixel pixel = img.GetPixel((int) row, (int) column);
+                var pixel = img.GetPixel((int) row, (int) column);
                 result.SetPixel((int) row, (int) column, new RgbPixel
                 {
                     R = (byte) (255 - pixel.R),

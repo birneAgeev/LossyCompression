@@ -19,14 +19,14 @@ namespace WindowsFormsTemp.Calculator
             if (first.Width != second.Width ||
                 first.Height != second.Height)
                 throw new ArgumentException("Not equal imadge dimentions");
-            double meanSquareError = 0.0;
+            var meanSquareError = 0.0;
 
-            for (int column = 0; column < first.Width; ++column)
+            for (var column = 0; column < first.Width; ++column)
             {
-                for (int row = 0; row < first.Height; ++row)
+                for (var row = 0; row < first.Height; ++row)
                 {
-                    RgbPixel firstPixel = ((IBitmap<RgbPixel>)first).GetPixel(row, column);
-                    RgbPixel secondPixel = ((IBitmap<RgbPixel>)second).GetPixel(row, column);
+                    var firstPixel = ((IBitmap<RgbPixel>) first).GetPixel(row, column);
+                    var secondPixel = ((IBitmap<RgbPixel>) second).GetPixel(row, column);
 
                     meanSquareError += Square(firstPixel.R - secondPixel.R) +
                                        Square(firstPixel.G - secondPixel.G) +

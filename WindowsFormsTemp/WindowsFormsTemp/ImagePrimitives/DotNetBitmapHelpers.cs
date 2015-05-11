@@ -8,11 +8,11 @@ namespace WindowsFormsTemp.ImagePrimitives
         public static IBitmap ToPlainBitmap(this Bitmap bitmap)
         {
             var result = new PlainBitmap<RgbPixel>(bitmap.Width, bitmap.Height);
-            for (int row = 0; row < bitmap.Height; ++row)
+            for (var row = 0; row < bitmap.Height; ++row)
             {
-                for (int column = 0; column < bitmap.Width; ++column)
+                for (var column = 0; column < bitmap.Width; ++column)
                 {
-                    Color pixel = bitmap.GetPixel(column, row);
+                    var pixel = bitmap.GetPixel(column, row);
                     result.SetPixel(new Position
                     {
                         Row = row,

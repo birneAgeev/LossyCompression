@@ -33,7 +33,7 @@ namespace WindowsFormsTemp.Filters
                     Column = column,
                     Row = row
                 };
-                RgbPixel pixel = img.GetPixel(currentPosition);
+                var pixel = img.GetPixel(currentPosition);
                 pixel = Transform(pixel, yuvData);
                 result.SetPixel(currentPosition, pixel);
             }));
@@ -61,7 +61,7 @@ namespace WindowsFormsTemp.Filters
 
         private int QuantizationEffect(int value, byte quantizationDegree, int maxDegree)
         {
-            int shift = maxDegree - quantizationDegree;
+            var shift = maxDegree - quantizationDegree;
             return (value >> shift << shift) + (shift != 0 ? (1 << (shift - 1)) : 0);
         }
 

@@ -2,9 +2,6 @@
 {
     public class Position : IPosition
     {
-        public int Row { get; set; }
-        public int Column { get; set; }
-
         public Position()
         {
             Row = Column = 0;
@@ -15,6 +12,9 @@
             Row = row;
             Column = column;
         }
+
+        public int Row { get; set; }
+        public int Column { get; set; }
 
         public IPosition Add(ISpan span)
         {

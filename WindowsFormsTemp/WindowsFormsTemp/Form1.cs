@@ -73,8 +73,8 @@ namespace WindowsFormsTemp
             initialPictureBox.Image = initialPlainBitmap.ToDotNetBitmap();
             currentPictureBox.Image = currentPlainBitmap.ToDotNetBitmap();
 
-            string psnrText = PsnrCalculator.Instance.Calculate(initialPlainBitmap, currentPlainBitmap)
-                                            .ToString("F3", CultureInfo.InvariantCulture);
+            var psnrText = PsnrCalculator.Instance.Calculate(initialPlainBitmap, currentPlainBitmap)
+                .ToString("F3", CultureInfo.InvariantCulture);
 
             if (psnrText == "Infinity")
             {
@@ -101,10 +101,10 @@ namespace WindowsFormsTemp
             {
                 lbgNumericUpDown.Enabled = true;
                 currentPlainBitmap = currentPlainBitmap.Apply(VectorQuantizationFilter.Instance,
-                                                              new VectorQuantizationData
-                                                                  {
-                                                                      PaleteSize = (int) lbgNumericUpDown.Value
-                                                                  });
+                    new VectorQuantizationData
+                    {
+                        PaleteSize = (int) lbgNumericUpDown.Value
+                    });
             }
             else
             {
@@ -132,11 +132,11 @@ namespace WindowsFormsTemp
             if (yuvCheckBox.Checked)
             {
                 currentPlainBitmap = currentPlainBitmap.Apply(YuvFilter.Instance, new YuvData
-                    {
-                        YQuantizationDegree = (byte) yTrackBar.Value,
-                        UQuantizationDegree = (byte) uTrackBar.Value,
-                        VQuantizationDegree = (byte) vTrackBar.Value,
-                    });
+                {
+                    YQuantizationDegree = (byte) yTrackBar.Value,
+                    UQuantizationDegree = (byte) uTrackBar.Value,
+                    VQuantizationDegree = (byte) vTrackBar.Value
+                });
 
                 yTrackBar.Enabled = true;
                 uTrackBar.Enabled = true;
@@ -164,7 +164,7 @@ namespace WindowsFormsTemp
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            int size = Math.Min(Size.Width*256/859, Size.Height*256/547);
+            var size = Math.Min(Size.Width*256/859, Size.Height*256/547);
             currentPictureBox.Size = new Size(size, size);
             initialPictureBox.Size = new Size(size, size);
 
@@ -218,12 +218,10 @@ namespace WindowsFormsTemp
 
         private void yLabel_Click(object sender, EventArgs e)
         {
-
         }
 
         private void uLabel_Click(object sender, EventArgs e)
         {
-
         }
 
         private void lbgNumericUpDown_ValueChanged(object sender, EventArgs e)
