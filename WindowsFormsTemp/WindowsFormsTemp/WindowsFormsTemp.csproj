@@ -64,14 +64,16 @@
     </Compile>
     <Compile Include="ImagePrimitives\DotNetBitmapHelpers.cs" />
     <Compile Include="ImagePrimitives\IBitmap.cs" />
+    <Compile Include="ImagePrimitives\IPixel.cs" />
     <Compile Include="ImagePrimitives\PlainBitmap.cs" />
+    <Compile Include="ImagePrimitives\YCrCbPixel.cs" />
     <Compile Include="NavigationPrimitives\IPosition.cs" />
     <Compile Include="NavigationPrimitives\ISpan.cs" />
     <Compile Include="NavigationPrimitives\Position.cs" />
     <Compile Include="NavigationPrimitives\Span.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ImagePrimitives\RgbColor.cs" />
+    <Compile Include="ImagePrimitives\RgbPixel.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

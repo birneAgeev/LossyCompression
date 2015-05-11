@@ -15,23 +15,27 @@ namespace WindowsFormsTemp.Filters
 
         public IBitmap Apply(IBitmap image, IFilterData filterData)
         {
+            if (!(image is IBitmap<RgbPixel>))
+                throw new ArgumentException("Image is not RGB.");
+            var img = (IBitmap<RgbPixel>) image;
+
             if (!(filterData is VectorQuantizationData))
                 throw new ArgumentException("Filter data is not VectorQuantizationData!");
 
             var vectorQuantizationData = filterData as VectorQuantizationData;
 
-            List<RgbColor> palete = GeneratePalete(image, vectorQuantizationData);
+            List<RgbPixel> palete = GeneratePalete(img, vectorQuantizationData);
 
             if (palete.Count() < vectorQuantizationData.PaleteSize)
-                return image;
+                return img;
 
-            IBitmap result = new PlainBitmap(image.Width, image.Height);
+            var result = new PlainBitmap<RgbPixel>(img.Width, img.Height);
 
-            for (int column = 0; column < image.Width; ++column)
+            for (int column = 0; column < img.Width; ++column)
             {
-                for (int row = 0; row < image.Height; ++row)
+                for (int row = 0; row < img.Height; ++row)
                 {
-                    result.SetPixel(row, column, GetNearest(image.GetPixel(row, column), palete));
+                    result.SetPixel(row, column, GetNearest(img.GetPixel(row, column), palete));
                 }
             }
 
@@ -43,17 +47,17 @@ namespace WindowsFormsTemp.Filters
             return a*a;
         }
 
-        private static double Distance(RgbColor u, RgbColor v)
+        private static double Distance(RgbPixel u, RgbPixel v)
         {
             return Sqr(u.R - v.R) + Sqr(u.G - v.G) + Sqr(u.B - v.B);
         }
 
-        private static RgbColor GetNearest(RgbColor pixel, List<RgbColor> palete)
+        private static RgbPixel GetNearest(RgbPixel pixel, List<RgbPixel> palete)
         {
             double minDistance = 1e10;
-            RgbColor bestColor = palete.First();
+            RgbPixel bestColor = palete.First();
 
-            foreach (RgbColor currentColor in palete)
+            foreach (RgbPixel currentColor in palete)
             {
                 double distance = Distance(currentColor, pixel);
                 if (distance < minDistance)
@@ -66,9 +70,9 @@ namespace WindowsFormsTemp.Filters
             return bestColor;
         }
 
-        private List<RgbColor> GeneratePalete(IBitmap image, VectorQuantizationData vectorQuantizationData)
+        private List<RgbPixel> GeneratePalete(IBitmap<RgbPixel> image, VectorQuantizationData vectorQuantizationData)
         {
-            List<RgbColor> palete = GetInitialPalete(image, vectorQuantizationData);
+            List<RgbPixel> palete = GetInitialPalete(image, vectorQuantizationData);
 
             if (palete.Count() < vectorQuantizationData.PaleteSize)
                 return palete;
@@ -77,19 +81,19 @@ namespace WindowsFormsTemp.Filters
 
             while (true)
             {
-                List<RgbColor> oldPalete = palete;
+                List<RgbPixel> oldPalete = palete;
                 palete = Enumerable.Range(0, image.Height)
-                                   .SelectMany(
-                                       row =>
-                                       Enumerable.Range(0, image.Width)
-                                                 .Select(
-                                                     column =>
-                                                     image.GetPixel(row, column)))
-                                   .AsParallel()
-                                   .GroupBy(pixel => GetNearest(pixel, oldPalete))
-                                   .AsParallel()
-                                   .Select(GetCentroid)
-                                   .ToList();
+                    .SelectMany(
+                        row =>
+                            Enumerable.Range(0, image.Width)
+                                .Select(
+                                    column =>
+                                        image.GetPixel(row, column)))
+                    .AsParallel()
+                    .GroupBy(pixel => GetNearest(pixel, oldPalete))
+                    .AsParallel()
+                    .Select(GetCentroid)
+                    .ToList();
                 double currentDistortion = CalculateAverageDistortion(image, palete);
 
                 if (Math.Abs(previousDistortion - currentDistortion)/currentDistortion < 1e-1)
@@ -99,39 +103,39 @@ namespace WindowsFormsTemp.Filters
             }
         }
 
-        private static RgbColor GetCentroid(IEnumerable<RgbColor> group)
+        private static RgbPixel GetCentroid(IEnumerable<RgbPixel> group)
         {
-            var rgbColors = @group as IList<RgbColor> ?? @group.ToList();
+            IList<RgbPixel> rgbColors = @group as IList<RgbPixel> ?? @group.ToList();
             int groupSize = rgbColors.Count();
 
-            var sumR = 0;
-            var sumG = 0;
-            var sumB = 0;
+            int sumR = 0;
+            int sumG = 0;
+            int sumB = 0;
 
-            foreach (var color in rgbColors)
+            foreach (RgbPixel color in rgbColors)
             {
                 sumR += color.R;
                 sumG += color.G;
                 sumB += color.B;
             }
 
-            return new RgbColor
-                {
-                    R = (byte) (sumR/groupSize),
-                    G = (byte) (sumG/groupSize),
-                    B = (byte) (sumB/groupSize),
-                };
+            return new RgbPixel
+            {
+                R = (byte) (sumR/groupSize),
+                G = (byte) (sumG/groupSize),
+                B = (byte) (sumB/groupSize),
+            };
         }
 
-        private double CalculateAverageDistortion(IBitmap image, List<RgbColor> palete)
+        private double CalculateAverageDistortion(IBitmap<RgbPixel> image, List<RgbPixel> palete)
         {
             double sum = 0.0;
             for (int column = 0; column < image.Width; ++column)
             {
                 for (int row = 0; row < image.Height; ++row)
                 {
-                    RgbColor pixel = image.GetPixel(row, column);
-                    RgbColor nearest = GetNearest(pixel, palete);
+                    RgbPixel pixel = image.GetPixel(row, column);
+                    RgbPixel nearest = GetNearest(pixel, palete);
                     sum += Distance(nearest, pixel);
                 }
             }
@@ -139,34 +143,35 @@ namespace WindowsFormsTemp.Filters
             return sum;
         }
 
-        private static List<RgbColor> GetInitialPalete(IBitmap image, VectorQuantizationData vectorQuantizationData)
+        private static List<RgbPixel> GetInitialPalete(IBitmap<RgbPixel> image,
+            VectorQuantizationData vectorQuantizationData)
         {
             IOrderedEnumerable<Tuple<int, int>> frequencies = Enumerable.Range(0, image.Height)
-                                                                        .SelectMany(
-                                                                            row =>
-                                                                            Enumerable.Range(0, image.Width)
-                                                                                      .Select(
-                                                                                          column =>
-                                                                                          image.GetPixel(row, column)))
-                                                                        .GroupBy(
-                                                                            color =>
-                                                                            (color.R << 16) + (color.G << 8) + color.B)
-                                                                        .Select(
-                                                                            group =>
-                                                                            Tuple.Create(group.Key, group.Count()))
-                                                                        .OrderBy(tuple => tuple.Item2);
-            var palete = new List<RgbColor>();
+                .SelectMany(
+                    row =>
+                        Enumerable.Range(0, image.Width)
+                            .Select(
+                                column =>
+                                    image.GetPixel(row, column)))
+                .GroupBy(
+                    color =>
+                        (color.R << 16) + (color.G << 8) + color.B)
+                .Select(
+                    group =>
+                        Tuple.Create(group.Key, group.Count()))
+                .OrderBy(tuple => tuple.Item2);
+            var palete = new List<RgbPixel>();
             int currentPaleteSize = 0;
             foreach (var tuple in frequencies)
             {
                 if (currentPaleteSize == vectorQuantizationData.PaleteSize)
                     return palete;
-                var color = new RgbColor
-                    {
-                        R = (byte) (tuple.Item1 >> 16),
-                        G = (byte) (tuple.Item1 << 16 >> 24),
-                        B = (byte) (tuple.Item1 << 24 >> 24)
-                    };
+                var color = new RgbPixel
+                {
+                    R = (byte) (tuple.Item1 >> 16),
+                    G = (byte) (tuple.Item1 << 16 >> 24),
+                    B = (byte) (tuple.Item1 << 24 >> 24)
+                };
                 palete.Add(color);
                 ++currentPaleteSize;
             }

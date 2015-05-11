@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using WindowsFormsTemp.ImagePrimitives;
 using WindowsFormsTemp.NavigationPrimitives;
 
@@ -6,8 +7,11 @@ namespace WindowsFormsTemp.Filters
 {
     public class GrayScaleFilter : IFilter
     {
-        public static readonly GrayScaleFilter EqualWeights = new GrayScaleFilter(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0);
+        public static readonly GrayScaleFilter EqualWeights = new GrayScaleFilter(1.0/3.0, 1.0/3.0, 1.0/3.0);
         public static readonly GrayScaleFilter Ccir6011 = new GrayScaleFilter(0.299, 0.587, 0.114);
+        private readonly double bWeight;
+        private readonly double gWeight;
+        private readonly double rWeight;
 
         private GrayScaleFilter(double rWeight, double gWeight, double bWeight)
         {
@@ -18,14 +22,18 @@ namespace WindowsFormsTemp.Filters
 
         public IBitmap Apply(IBitmap image, IFilterData filterData)
         {
-            IBitmap result = new PlainBitmap(image.Width, image.Height);
+            if (!(image is IBitmap<RgbPixel>))
+                throw new ArgumentException("Image is not RGB.");
+            var img = (IBitmap<RgbPixel>) image;
+            
+            var result = new PlainBitmap<RgbPixel>(img.Width, img.Height);
 
-            Parallel.For((long)0, image.Width, column => Parallel.For((long)0, image.Height, row =>
+            Parallel.For((long) 0, img.Width, column => Parallel.For((long) 0, img.Height, row =>
             {
-                var currentPosition = new Position((int)row, (int)column);
-                RgbColor pixel = image.GetPixel(currentPosition);
-                var value = GetGrayValue(pixel);
-                pixel = new RgbColor
+                var currentPosition = new Position((int) row, (int) column);
+                RgbPixel pixel = img.GetPixel(currentPosition);
+                byte value = GetGrayValue(pixel);
+                pixel = new RgbPixel
                 {
                     R = value,
                     G = value,
@@ -37,13 +45,9 @@ namespace WindowsFormsTemp.Filters
             return result;
         }
 
-        private byte GetGrayValue(RgbColor pixel)
+        private byte GetGrayValue(RgbPixel pixel)
         {
-            return (byte)(bWeight*pixel.B + gWeight*pixel.G + rWeight*pixel.R);
+            return (byte) (bWeight*pixel.B + gWeight*pixel.G + rWeight*pixel.R);
         }
-
-        private readonly double rWeight;
-        private readonly double gWeight;
-        private readonly double bWeight;
     }
 }

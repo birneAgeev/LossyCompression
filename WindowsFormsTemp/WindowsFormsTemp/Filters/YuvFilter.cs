@@ -15,21 +15,25 @@ namespace WindowsFormsTemp.Filters
 
         public IBitmap Apply(IBitmap image, IFilterData filterData)
         {
+            if (!(image is IBitmap<RgbPixel>))
+                throw new ArgumentException("Image is not RGB.");
+            var img = (IBitmap<RgbPixel>) image;
+
             if (!(filterData is YuvData))
                 throw new ArgumentException("Filter data is not YuvData!");
 
             var yuvData = filterData as YuvData;
 
-            IBitmap result = new PlainBitmap(image.Width, image.Height);
+            var result = new PlainBitmap<RgbPixel>(img.Width, img.Height);
 
-            Parallel.For(0, image.Width, column => Parallel.For(0, image.Height, row =>
+            Parallel.For(0, img.Width, column => Parallel.For(0, img.Height, row =>
             {
                 var currentPosition = new Position
                 {
                     Column = column,
                     Row = row
                 };
-                RgbColor pixel = image.GetPixel(currentPosition);
+                RgbPixel pixel = img.GetPixel(currentPosition);
                 pixel = Transform(pixel, yuvData);
                 result.SetPixel(currentPosition, pixel);
             }));
@@ -37,7 +41,7 @@ namespace WindowsFormsTemp.Filters
             return result;
         }
 
-        private RgbColor Transform(RgbColor pixel, YuvData yuvData)
+        private RgbPixel Transform(RgbPixel pixel, YuvData yuvData)
         {
             var y = (int) Math.Round(0.299*pixel.R + 0.587*pixel.G + 0.114*pixel.B);
             var cr = (int) Math.Round(-0.1687*pixel.R - 0.3313*pixel.G + 0.5*pixel.B + 128.0);
@@ -47,7 +51,7 @@ namespace WindowsFormsTemp.Filters
             cr = QuantizationEffect(cr, yuvData.UQuantizationDegree, 8);
             cb = QuantizationEffect(cb, yuvData.VQuantizationDegree, 8);
 
-            return new RgbColor
+            return new RgbPixel
             {
                 R = ToByte(y + 1.402*(cb - 128.0)),
                 G = ToByte(y - 0.34414*(cr - 128.0) - 0.71414*(cb - 128.0)),
