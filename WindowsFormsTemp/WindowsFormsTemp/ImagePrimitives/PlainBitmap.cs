@@ -38,6 +38,9 @@ namespace WindowsFormsTemp.ImagePrimitives
 
         public IBitmap<RgbPixel> ToRgbBitmap()
         {
+            if (typeof (TPixel) == typeof (RgbPixel))
+                return this as IBitmap<RgbPixel>;
+
             var result = new PlainBitmap<RgbPixel>(Width, Height);
             for (var row = 0; row < Height; ++row)
             {

@@ -38,5 +38,24 @@ namespace WindowsFormsTemp.ImagePrimitives
             }
             return result;
         }
+
+        public static IBitmap<YCrCbPixel> ToYCrCbBitmap(this IBitmap bitmap)
+        {
+            var rgbBitmap = bitmap.ToRgbBitmap();
+            var result = new PlainBitmap<YCrCbPixel>(rgbBitmap.Width, rgbBitmap.Height);
+            for (var row = 0; row < rgbBitmap.Height; ++row)
+            {
+                for (var column = 0; column < rgbBitmap.Width; ++column)
+                {
+                    var pixel = rgbBitmap.GetPixel(new Position
+                    {
+                        Column = column,
+                        Row = row
+                    }).ToYCrCb();
+                    result.SetPixel(row, column, pixel);
+                }
+            }
+            return result;
+        }
     }
 }
