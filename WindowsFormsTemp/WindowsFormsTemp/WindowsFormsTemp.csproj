@@ -67,7 +67,9 @@
     <Compile Include="ImagePrimitives\IPixel.cs" />
     <Compile Include="ImagePrimitives\PlainBitmap.cs" />
     <Compile Include="ImagePrimitives\YCrCbPixel.cs" />
+    <Compile Include="Jpeg\IJpegBlockStream.cs" />
     <Compile Include="Jpeg\IJpegThinner.cs" />
+    <Compile Include="Jpeg\JpegBlockStream.cs" />
     <Compile Include="Jpeg\JpegThinnerResult.cs" />
     <Compile Include="Jpeg\SeparatedYCrCb.cs" />
     <Compile Include="Jpeg\JpegThinner.cs" />
