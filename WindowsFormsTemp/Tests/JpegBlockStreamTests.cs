@@ -9,7 +9,7 @@ namespace Tests
         [Test]
         public void Test()
         {
-            var source = new float[,]
+            var source = new double[,]
             {
                 {1, 2, 3, 4, 5, 6},
                 {6, 7, 8, 9, 10, 11},
@@ -20,7 +20,7 @@ namespace Tests
 
             var stream = new JpegBlockStream(source, 4);
             
-            Assert.AreEqual(new float[,]
+            Assert.AreEqual(new double[,]
             {
                 {25, 26, 26, 26},
                 {25, 26, 26, 26},
@@ -28,7 +28,7 @@ namespace Tests
                 {25, 26, 26, 26}
             }, stream.GetBlock(1, 1));
 
-            Assert.AreEqual(new float[,]
+            Assert.AreEqual(new double[,]
             {
                 {21, 22, 23, 24},
                 {21, 22, 23, 24},
@@ -36,7 +36,7 @@ namespace Tests
                 {21, 22, 23, 24}
             }, stream.GetBlock(1, 0));
 
-            Assert.AreEqual(new float[,]
+            Assert.AreEqual(new double[,]
             {
                 {5, 6, 6, 6},
                 {10, 11, 11, 11},

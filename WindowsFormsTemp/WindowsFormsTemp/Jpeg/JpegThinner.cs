@@ -4,7 +4,7 @@ using WindowsFormsTemp.ImagePrimitives;
 
 namespace WindowsFormsTemp.Jpeg
 {
-    internal class JpegThinner : IJpegThinner
+    internal class JpegThinner
     {
         public static readonly JpegThinner Instance = new JpegThinner();
 
@@ -59,7 +59,7 @@ namespace WindowsFormsTemp.Jpeg
             };
         }
 
-        private static byte ToByte(float a)
+        private static byte ToByte(double a)
         {
             var integer = (int) Math.Round(a);
             if (integer > 255)
@@ -69,14 +69,14 @@ namespace WindowsFormsTemp.Jpeg
             return (byte) integer;
         }
 
-        private static float[,] ThinOutComponent(IBitmap<YCrCbPixel> bitmap, string componentName,
+        private static double[,] ThinOutComponent(IBitmap<YCrCbPixel> bitmap, string componentName,
             ThinningMode thinningMode)
         {
             var heightDivider = ModeToDividers[thinningMode].Item1;
             var widthDivider = ModeToDividers[thinningMode].Item2;
             var height = (int) Math.Ceiling((double) bitmap.Height/heightDivider);
             var width = (int) Math.Ceiling((double) bitmap.Width/widthDivider);
-            var result = new float[height, width];
+            var result = new double[height, width];
             var template = ModeToTemplate[thinningMode];
 
             for (var row = 0; row < bitmap.Height; row += 2)

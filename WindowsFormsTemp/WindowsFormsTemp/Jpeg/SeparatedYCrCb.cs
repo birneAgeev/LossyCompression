@@ -2,8 +2,8 @@
 {
     public class SeparatedYCrCb
     {
-        public float[,] Y { get; set; }
-        public float[,] Cb { get; set; }
-        public float[,] Cr { get; set; }
+        public double[,] Y { get; set; }
+        public double[,] Cb { get; set; }
+        public double[,] Cr { get; set; }
     }
 }

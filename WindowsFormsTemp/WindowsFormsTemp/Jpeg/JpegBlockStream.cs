@@ -4,11 +4,11 @@ namespace WindowsFormsTemp.Jpeg
 {
     public class JpegBlockStream : IJpegBlockStream
     {
-        private readonly float[,] _source;
+        private readonly double[,] _source;
         private readonly int _sourceHeight;
         private readonly int _sourceWidth;
 
-        public JpegBlockStream(float[,] source, int blockSize = 8)
+        public JpegBlockStream(double[,] source, int blockSize = 8)
         {
             BlockSize = blockSize;
             _source = source;
@@ -22,18 +22,18 @@ namespace WindowsFormsTemp.Jpeg
         public int HeightInBlocks { get; private set; }
         public int BlockSize { get; private set; }
 
-        public float[,] GetBlock(int row, int column)
+        public double[,] GetBlock(int row, int column)
         {
             var startRowInSource = row*BlockSize;
             var startColumnInSource = column*BlockSize;
-            var result = new float[BlockSize, BlockSize];
+            var result = new double[BlockSize, BlockSize];
 
-            var lastInRow = new float[BlockSize];
-            var lastInColumn = new float[BlockSize];
+            var lastInRow = new double[BlockSize];
+            var lastInColumn = new double[BlockSize];
             for (var i = 0; i < BlockSize; ++i)
             {
-                lastInRow[i] = float.NaN;
-                lastInColumn[i] = float.NaN;
+                lastInRow[i] = double.NaN;
+                lastInColumn[i] = double.NaN;
             }
 
             for (var rowInSource = startRowInSource; rowInSource < startRowInSource + BlockSize; ++rowInSource)
@@ -45,14 +45,14 @@ namespace WindowsFormsTemp.Jpeg
                     var r = rowInSource - startRowInSource;
                     var c = columnInSource - startColumnInSource;
 
-                    float value;
+                    double value;
                     if (InBounds(rowInSource, columnInSource))
                     {
                         value = _source[rowInSource, columnInSource];
                     }
                     else
                     {
-                        if (rowInSource >= _sourceHeight && !float.IsNaN(lastInColumn[c]))
+                        if (rowInSource >= _sourceHeight && !double.IsNaN(lastInColumn[c]))
                         {
                             value = lastInColumn[c];
                         }
