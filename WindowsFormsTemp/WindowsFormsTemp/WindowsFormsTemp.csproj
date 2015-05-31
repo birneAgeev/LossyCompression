@@ -71,8 +71,10 @@
     <Compile Include="ImagePrimitives\PlainBitmap.cs" />
     <Compile Include="ImagePrimitives\YCrCbPixel.cs" />
     <Compile Include="Jpeg\IJpegBlockStream.cs" />
+    <Compile Include="Jpeg\IJpegCoder.cs" />
     <Compile Include="Jpeg\IJpegThresholder.cs" />
     <Compile Include="Jpeg\JpegBlockStream.cs" />
+    <Compile Include="Jpeg\JpegCoder.cs" />
     <Compile Include="Jpeg\JpegDiscreteCosineTransformationCalculator.cs" />
     <Compile Include="Jpeg\JpegThinnerResult.cs" />
     <Compile Include="Jpeg\MaxValuesThresholder.cs" />
