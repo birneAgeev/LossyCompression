@@ -76,6 +76,7 @@
     <Compile Include="Jpeg\JpegThinnerResult.cs" />
     <Compile Include="Jpeg\SeparatedYCrCb.cs" />
     <Compile Include="Jpeg\JpegThinner.cs" />
+    <Compile Include="Jpeg\SevenZipCoder.cs" />
     <Compile Include="Jpeg\ThinningMode.cs" />
     <Compile Include="NavigationPrimitives\IPosition.cs" />
     <Compile Include="NavigationPrimitives\ISpan.cs" />
