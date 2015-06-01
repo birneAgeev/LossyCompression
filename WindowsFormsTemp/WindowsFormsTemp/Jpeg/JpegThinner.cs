@@ -48,8 +48,8 @@ namespace WindowsFormsTemp.Jpeg
         private static YCrCbPixel DecompressPixel(int row, int column, JpegThinnerResult compressedData)
         {
             var mode = compressedData.ThinningMode;
-            var heightDivider = ModeToDividers[mode].Item1;
-            var widthDivider = ModeToDividers[mode].Item2;
+            var heightDivider = ModeToDividers[mode].Item2;
+            var widthDivider = ModeToDividers[mode].Item1;
 
             return new YCrCbPixel
             {
