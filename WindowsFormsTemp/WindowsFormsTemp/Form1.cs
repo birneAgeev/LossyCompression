@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Windows.Forms;
 using WindowsFormsTemp.Calculator;
 using WindowsFormsTemp.Filters;
 using WindowsFormsTemp.ImagePrimitives;
 using WindowsFormsTemp.Jpeg;
+using WindowsFormsTemp.Jpeg.Thresholders;
 using WindowsFormsTemp.Properties;
 
 namespace WindowsFormsTemp
@@ -13,18 +15,24 @@ namespace WindowsFormsTemp
     public partial class MainForm : Form
     {
         private const string DefaultImagePath = "ImageData/image_Lena256gb.bmp";
+        private readonly int imageSize;
         private IBitmap currentPlainBitmap;
         private IBitmap initialPlainBitmap;
 
         public MainForm()
         {
             InitializeComponent();
+
+            imageSize = (int) new FileInfo(DefaultImagePath).Length;
+
             initialPlainBitmap = new Bitmap(DefaultImagePath).ToPlainBitmap();
             currentPlainBitmap = initialPlainBitmap;
 
             yLabel.Text = yTrackBar.Value.ToString(CultureInfo.InvariantCulture);
             uLabel.Text = uTrackBar.Value.ToString(CultureInfo.InvariantCulture);
             vLabel.Text = vTrackBar.Value.ToString(CultureInfo.InvariantCulture);
+
+            ThinningModeComboBox.Text = Resources.MainForm_MainForm_None;
 
             UpdateState();
         }
@@ -74,7 +82,7 @@ namespace WindowsFormsTemp
             initialPictureBox.Image = initialPlainBitmap.ToDotNetBitmap();
             currentPictureBox.Image = currentPlainBitmap.ToDotNetBitmap();
 
-            var psnrText = PsnrCalculator.Instance.Calculate(initialPlainBitmap, currentPlainBitmap)
+            string psnrText = PsnrCalculator.Instance.Calculate(initialPlainBitmap, currentPlainBitmap)
                 .ToString("F3", CultureInfo.InvariantCulture);
 
             if (psnrText == "Infinity")
@@ -96,11 +104,99 @@ namespace WindowsFormsTemp
             currentPlainBitmap = initialPlainBitmap;
 
             if (JpegCheckBox.Checked)
-                currentPlainBitmap = JpegCoder.Instance.Decode(
-                    JpegCoder.Instance.Encode(currentPlainBitmap, new JpegCoderSettings
+            {
+                ThinningModeComboBox.Enabled = true;
+                ByMaxValueRadioButton.Enabled = true;
+                CustomMatrixRadioButton.Enabled = true;
+                StandartMatrixRadioButton.Enabled = true;
+
+                var yThresholderSettings = new GeneralizedThresholderSettings();
+                var crcbThresholderSettings = new GeneralizedThresholderSettings();
+
+                if (ByMaxValueRadioButton.Checked)
+                {
+                    MaxCountNumericUpDown.Enabled = true;
+                    yThresholderSettings = new GeneralizedThresholderSettings
                     {
-                        ThinningMode = ThinningMode._2H2V
-                    })).ToRgbBitmap();
+                        ThresholderType = ThresholderType.MaxValuesThresholder,
+                        MaxValuesThresholderSettings = new MaxValuesThresholderSettings
+                        {
+                            MaxCount = (int) MaxCountNumericUpDown.Value
+                        }
+                    };
+                    crcbThresholderSettings = yThresholderSettings;
+                }
+                else
+                {
+                    MaxCountNumericUpDown.Enabled = false;
+                }
+
+                if (CustomMatrixRadioButton.Checked)
+                {
+                    AlphaNumericUpDown.Enabled = true;
+                    GammaNumericUpDown.Enabled = true;
+                    yThresholderSettings = new GeneralizedThresholderSettings
+                    {
+                        ThresholderType = ThresholderType.CustomMatrixThresholder,
+                        CustomMatrixThresholderSettings = new CustomMatrixThresholderSettings
+                        {
+                            Alpha = (short) AlphaNumericUpDown.Value,
+                            Gamma = (short) GammaNumericUpDown.Value
+                        }
+                    };
+                    crcbThresholderSettings = yThresholderSettings;
+                }
+                else
+                {
+                    AlphaNumericUpDown.Enabled = false;
+                    GammaNumericUpDown.Enabled = false;
+                }
+
+                if (StandartMatrixRadioButton.Checked)
+                {
+                    yThresholderSettings = new GeneralizedThresholderSettings
+                    {
+                        ThresholderType = ThresholderType.StandartMatrixThresholder,
+                        StandartMatrixThresholderSettings = new StandartMatrixThresholderSettings
+                        {
+                            StandartMatrixType = StandartMatrixType.Y
+                        }
+                    };
+                    crcbThresholderSettings = new GeneralizedThresholderSettings
+                    {
+                        ThresholderType = ThresholderType.StandartMatrixThresholder,
+                        StandartMatrixThresholderSettings = new StandartMatrixThresholderSettings
+                        {
+                            StandartMatrixType = StandartMatrixType.CrCb
+                        }
+                    };
+                }
+
+                byte[] encodedBytes = JpegCoder.Instance.Encode(currentPlainBitmap, new JpegCoderSettings
+                {
+                    ThinningMode = GetThinningMode(ThinningModeComboBox.Text),
+                    YThresholderSettings = yThresholderSettings,
+                    CrThresholderSettings = crcbThresholderSettings,
+                    CbThresholderSettings = crcbThresholderSettings
+                });
+
+                currentPlainBitmap = JpegCoder.Instance.Decode(encodedBytes).ToRgbBitmap();
+
+                label14.Text = (imageSize/1024.0).ToString("F");
+                label15.Text = (encodedBytes.Length/1024.0).ToString("F");
+            }
+            else
+            {
+                ThinningModeComboBox.Enabled = false;
+                ByMaxValueRadioButton.Enabled = false;
+                CustomMatrixRadioButton.Enabled = false;
+                StandartMatrixRadioButton.Enabled = false;
+                MaxCountNumericUpDown.Enabled = false;
+                AlphaNumericUpDown.Enabled = false;
+                GammaNumericUpDown.Enabled = false;
+                label14.Text = Resources.MainForm_UpdateCheckBox__;
+                label15.Text = Resources.MainForm_UpdateCheckBox__;
+            }
 
             if (invertCheckBox.Checked)
                 currentPlainBitmap = currentPlainBitmap.Apply(InversionFilter.Instance);
@@ -159,6 +255,17 @@ namespace WindowsFormsTemp
             UpdateState();
         }
 
+        private static ThinningMode GetThinningMode(string text)
+        {
+            if (text == "2h2v")
+                return ThinningMode._2H2V;
+            if (text == "1h2v")
+                return ThinningMode._1H2V;
+            if (text == "2h1v")
+                return ThinningMode._2H1V;
+            return ThinningMode.None;
+        }
+
         private void yuvCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             UpdateCheckBox();
@@ -172,7 +279,7 @@ namespace WindowsFormsTemp
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            var size = Math.Min(Size.Width*256/859, Size.Height*256/547);
+            int size = Math.Min(Size.Width*256/859, Size.Height*256/547);
             currentPictureBox.Size = new Size(size, size);
             initialPictureBox.Size = new Size(size, size);
 
@@ -243,6 +350,41 @@ namespace WindowsFormsTemp
         }
 
         private void JpegCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void ThinningModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void ByMaxValueRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void CustomMatrixRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void StandartMatrixRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void MaxCountNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void AlphaNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void GammaNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             UpdateCheckBox();
         }

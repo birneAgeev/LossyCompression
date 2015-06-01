@@ -61,6 +61,23 @@
             this.invertCheckBox = new System.Windows.Forms.CheckBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.JpegCheckBox = new System.Windows.Forms.CheckBox();
+            this.ThinningModeComboBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.ByMaxValueRadioButton = new System.Windows.Forms.RadioButton();
+            this.CustomMatrixRadioButton = new System.Windows.Forms.RadioButton();
+            this.StandartMatrixRadioButton = new System.Windows.Forms.RadioButton();
+            this.label4 = new System.Windows.Forms.Label();
+            this.MaxCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.AlphaNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.GammaNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.currentPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.initialPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uTrackBar)).BeginInit();
@@ -74,6 +91,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.lbgNumericUpDown)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxCountNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AlphaNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GammaNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // currentPictureBox
@@ -447,6 +467,23 @@
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage5.Controls.Add(this.label15);
+            this.tabPage5.Controls.Add(this.label14);
+            this.tabPage5.Controls.Add(this.label13);
+            this.tabPage5.Controls.Add(this.label12);
+            this.tabPage5.Controls.Add(this.label11);
+            this.tabPage5.Controls.Add(this.label10);
+            this.tabPage5.Controls.Add(this.label9);
+            this.tabPage5.Controls.Add(this.label5);
+            this.tabPage5.Controls.Add(this.GammaNumericUpDown);
+            this.tabPage5.Controls.Add(this.AlphaNumericUpDown);
+            this.tabPage5.Controls.Add(this.MaxCountNumericUpDown);
+            this.tabPage5.Controls.Add(this.label4);
+            this.tabPage5.Controls.Add(this.StandartMatrixRadioButton);
+            this.tabPage5.Controls.Add(this.CustomMatrixRadioButton);
+            this.tabPage5.Controls.Add(this.ByMaxValueRadioButton);
+            this.tabPage5.Controls.Add(this.label3);
+            this.tabPage5.Controls.Add(this.ThinningModeComboBox);
             this.tabPage5.Controls.Add(this.JpegCheckBox);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
@@ -458,13 +495,219 @@
             // JpegCheckBox
             // 
             this.JpegCheckBox.AutoSize = true;
-            this.JpegCheckBox.Location = new System.Drawing.Point(80, 85);
+            this.JpegCheckBox.Location = new System.Drawing.Point(26, 18);
             this.JpegCheckBox.Name = "JpegCheckBox";
-            this.JpegCheckBox.Size = new System.Drawing.Size(49, 17);
+            this.JpegCheckBox.Size = new System.Drawing.Size(59, 17);
             this.JpegCheckBox.TabIndex = 0;
-            this.JpegCheckBox.Text = "Jpeg";
+            this.JpegCheckBox.Text = "Enable";
             this.JpegCheckBox.UseVisualStyleBackColor = true;
             this.JpegCheckBox.CheckedChanged += new System.EventHandler(this.JpegCheckBox_CheckedChanged);
+            // 
+            // ThinningModeComboBox
+            // 
+            this.ThinningModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ThinningModeComboBox.Enabled = false;
+            this.ThinningModeComboBox.FormattingEnabled = true;
+            this.ThinningModeComboBox.Items.AddRange(new object[] {
+            "None",
+            "2h1v",
+            "1h2v",
+            "2h2v"});
+            this.ThinningModeComboBox.Location = new System.Drawing.Point(26, 74);
+            this.ThinningModeComboBox.Name = "ThinningModeComboBox";
+            this.ThinningModeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.ThinningModeComboBox.TabIndex = 1;
+            this.ThinningModeComboBox.SelectedIndexChanged += new System.EventHandler(this.ThinningModeComboBox_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(23, 58);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(90, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Decimation Mode";
+            // 
+            // ByMaxValueRadioButton
+            // 
+            this.ByMaxValueRadioButton.AutoSize = true;
+            this.ByMaxValueRadioButton.Checked = true;
+            this.ByMaxValueRadioButton.Enabled = false;
+            this.ByMaxValueRadioButton.Location = new System.Drawing.Point(169, 78);
+            this.ByMaxValueRadioButton.Name = "ByMaxValueRadioButton";
+            this.ByMaxValueRadioButton.Size = new System.Drawing.Size(88, 17);
+            this.ByMaxValueRadioButton.TabIndex = 3;
+            this.ByMaxValueRadioButton.TabStop = true;
+            this.ByMaxValueRadioButton.Text = "By max value";
+            this.ByMaxValueRadioButton.UseVisualStyleBackColor = true;
+            this.ByMaxValueRadioButton.CheckedChanged += new System.EventHandler(this.ByMaxValueRadioButton_CheckedChanged);
+            // 
+            // CustomMatrixRadioButton
+            // 
+            this.CustomMatrixRadioButton.AutoSize = true;
+            this.CustomMatrixRadioButton.Enabled = false;
+            this.CustomMatrixRadioButton.Location = new System.Drawing.Point(169, 102);
+            this.CustomMatrixRadioButton.Name = "CustomMatrixRadioButton";
+            this.CustomMatrixRadioButton.Size = new System.Drawing.Size(90, 17);
+            this.CustomMatrixRadioButton.TabIndex = 4;
+            this.CustomMatrixRadioButton.Text = "Custom matrix";
+            this.CustomMatrixRadioButton.UseVisualStyleBackColor = true;
+            this.CustomMatrixRadioButton.CheckedChanged += new System.EventHandler(this.CustomMatrixRadioButton_CheckedChanged);
+            // 
+            // StandartMatrixRadioButton
+            // 
+            this.StandartMatrixRadioButton.AutoSize = true;
+            this.StandartMatrixRadioButton.Enabled = false;
+            this.StandartMatrixRadioButton.Location = new System.Drawing.Point(169, 142);
+            this.StandartMatrixRadioButton.Name = "StandartMatrixRadioButton";
+            this.StandartMatrixRadioButton.Size = new System.Drawing.Size(107, 17);
+            this.StandartMatrixRadioButton.TabIndex = 5;
+            this.StandartMatrixRadioButton.Text = "Standart matrices";
+            this.StandartMatrixRadioButton.UseVisualStyleBackColor = true;
+            this.StandartMatrixRadioButton.CheckedChanged += new System.EventHandler(this.StandartMatrixRadioButton_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(166, 58);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Thresholding Mode";
+            // 
+            // MaxCountNumericUpDown
+            // 
+            this.MaxCountNumericUpDown.Enabled = false;
+            this.MaxCountNumericUpDown.Location = new System.Drawing.Point(285, 78);
+            this.MaxCountNumericUpDown.Maximum = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
+            this.MaxCountNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.MaxCountNumericUpDown.Name = "MaxCountNumericUpDown";
+            this.MaxCountNumericUpDown.Size = new System.Drawing.Size(46, 20);
+            this.MaxCountNumericUpDown.TabIndex = 7;
+            this.MaxCountNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.MaxCountNumericUpDown.ValueChanged += new System.EventHandler(this.MaxCountNumericUpDown_ValueChanged);
+            // 
+            // AlphaNumericUpDown
+            // 
+            this.AlphaNumericUpDown.Enabled = false;
+            this.AlphaNumericUpDown.Location = new System.Drawing.Point(285, 104);
+            this.AlphaNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.AlphaNumericUpDown.Name = "AlphaNumericUpDown";
+            this.AlphaNumericUpDown.Size = new System.Drawing.Size(46, 20);
+            this.AlphaNumericUpDown.TabIndex = 8;
+            this.AlphaNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.AlphaNumericUpDown.ValueChanged += new System.EventHandler(this.AlphaNumericUpDown_ValueChanged);
+            // 
+            // GammaNumericUpDown
+            // 
+            this.GammaNumericUpDown.Enabled = false;
+            this.GammaNumericUpDown.Location = new System.Drawing.Point(285, 125);
+            this.GammaNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.GammaNumericUpDown.Name = "GammaNumericUpDown";
+            this.GammaNumericUpDown.Size = new System.Drawing.Size(46, 20);
+            this.GammaNumericUpDown.TabIndex = 9;
+            this.GammaNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.GammaNumericUpDown.ValueChanged += new System.EventHandler(this.GammaNumericUpDown_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(337, 82);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(61, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Alive Count";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(337, 106);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(34, 13);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Alpha";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(337, 127);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(43, 13);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Gamma";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(163, 18);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(54, 13);
+            this.label11.TabIndex = 13;
+            this.label11.Text = "Size in Kb";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(328, 18);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(32, 13);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "After:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(235, 18);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "Before:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(273, 18);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(41, 13);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "label14";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(357, 18);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(41, 13);
+            this.label15.TabIndex = 17;
+            this.label15.Text = "label15";
             // 
             // MainForm
             // 
@@ -502,6 +745,9 @@
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxCountNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AlphaNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GammaNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -542,6 +788,23 @@
         private System.Windows.Forms.CheckBox invertCheckBox;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.CheckBox JpegCheckBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox ThinningModeComboBox;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown GammaNumericUpDown;
+        private System.Windows.Forms.NumericUpDown AlphaNumericUpDown;
+        private System.Windows.Forms.NumericUpDown MaxCountNumericUpDown;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RadioButton StandartMatrixRadioButton;
+        private System.Windows.Forms.RadioButton CustomMatrixRadioButton;
+        private System.Windows.Forms.RadioButton ByMaxValueRadioButton;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
     }
 }
 

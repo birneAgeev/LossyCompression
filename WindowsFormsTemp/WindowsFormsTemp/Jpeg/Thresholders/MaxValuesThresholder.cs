@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Linq;
 
-namespace WindowsFormsTemp.Jpeg
+namespace WindowsFormsTemp.Jpeg.Thresholders
 {
-    public class MaxValuesThresholderSettings : IJpegThresholderSettings
-    {
-        public int MaxCount { get; set; }
-    }
-
     public class MaxValuesThresholder : IJpegThresholder
     {
-        public static MaxValuesThresholder Instatnce = new MaxValuesThresholder();
+        public static MaxValuesThresholder Instance = new MaxValuesThresholder();
 
         private MaxValuesThresholder()
         {
@@ -37,6 +32,11 @@ namespace WindowsFormsTemp.Jpeg
             }
 
             return result;
+        }
+
+        public double[,] Restore(double[,] matrix, IJpegThresholderSettings settings)
+        {
+            return matrix;
         }
     }
 }

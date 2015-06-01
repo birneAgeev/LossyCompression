@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using WindowsFormsTemp.ImagePrimitives;
+using WindowsFormsTemp.Jpeg.Thresholders;
 
 namespace WindowsFormsTemp.Jpeg
 {
@@ -20,9 +21,9 @@ namespace WindowsFormsTemp.Jpeg
 
             var result = new JpegData
             {
-                Y = EncodeComponent(thinnerResult.ImageData.Y),
-                Cr = EncodeComponent(thinnerResult.ImageData.Cr),
-                Cb = EncodeComponent(thinnerResult.ImageData.Cb),
+                Y = EncodeComponent(thinnerResult.ImageData.Y, settings.YThresholderSettings),
+                Cr = EncodeComponent(thinnerResult.ImageData.Cr, settings.CrThresholderSettings),
+                Cb = EncodeComponent(thinnerResult.ImageData.Cb, settings.CbThresholderSettings),
                 Width = bitmap.Width,
                 Height = bitmap.Height,
                 Settings = settings
@@ -56,15 +57,18 @@ namespace WindowsFormsTemp.Jpeg
                     Y = DecodeComponent(jpegData.Y,
                         jpegData.Width,
                         jpegData.Height,
-                        jpegData.Settings.BlocSize),
+                        jpegData.Settings.BlocSize,
+                        jpegData.Settings.YThresholderSettings),
                     Cr = DecodeComponent(jpegData.Cr,
                         jpegData.Width/widthDivisor,
                         jpegData.Height/heightDivisor,
-                        jpegData.Settings.BlocSize),
+                        jpegData.Settings.BlocSize,
+                        jpegData.Settings.CrThresholderSettings),
                     Cb = DecodeComponent(jpegData.Cb,
                         jpegData.Width/widthDivisor,
                         jpegData.Height/heightDivisor,
-                        jpegData.Settings.BlocSize)
+                        jpegData.Settings.BlocSize,
+                        jpegData.Settings.CbThresholderSettings)
                 },
                 ThinningMode = jpegData.Settings.ThinningMode
             };
@@ -72,7 +76,7 @@ namespace WindowsFormsTemp.Jpeg
             return JpegThinner.Instance.Decompress(thinnerData);
         }
 
-        private short[] EncodeComponent(double[,] matrix)
+        private short[] EncodeComponent(double[,] matrix, GeneralizedThresholderSettings settings)
         {
             var result = new List<short>();
 
@@ -84,8 +88,8 @@ namespace WindowsFormsTemp.Jpeg
                 {
                     double[,] transformedBlock = JpegDiscreteCosineTransformationCalculator.Instance
                         .ForwardTransform(blockStream.GetBlock(i, j))
-                        .Apply(MaxValuesThresholder.Instatnce,
-                            new MaxValuesThresholderSettings {MaxCount = 64});
+                        .Threshold(GeneralizedThresholder.Instance,
+                            settings);
                     result.AddRange(ZigZag(transformedBlock));
                 }
             }
@@ -93,7 +97,7 @@ namespace WindowsFormsTemp.Jpeg
             return result.ToArray();
         }
 
-        private double[,] DecodeComponent(short[] data, int width, int height, int blockSize)
+        private double[,] DecodeComponent(short[] data, int width, int height, int blockSize, GeneralizedThresholderSettings settings)
         {
             var result = new double[height, width];
             int ptr = 0;
@@ -102,7 +106,8 @@ namespace WindowsFormsTemp.Jpeg
             {
                 for (int j = 0; j < width; j += blockSize)
                 {
-                    double[,] block = ZigZag(data, ptr, blockSize);
+                    double[,] block = ZigZag(data, ptr, blockSize)
+                        .Restore(GeneralizedThresholder.Instance, settings);
                     block = JpegDiscreteCosineTransformationCalculator.Instance.InverseTransform(block);
                     ptr += blockSize*blockSize;
                     for (int y = 0; y < blockSize; ++y)

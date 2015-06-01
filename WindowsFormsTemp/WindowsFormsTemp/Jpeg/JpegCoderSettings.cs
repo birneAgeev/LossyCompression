@@ -1,4 +1,5 @@
 ﻿using System;
+using WindowsFormsTemp.Jpeg.Thresholders;
 
 namespace WindowsFormsTemp.Jpeg
 {
@@ -6,6 +7,9 @@ namespace WindowsFormsTemp.Jpeg
     public class JpegCoderSettings
     {
         public ThinningMode ThinningMode { get; set; }
+        public GeneralizedThresholderSettings YThresholderSettings { get; set; }
+        public GeneralizedThresholderSettings CrThresholderSettings { get; set; }
+        public GeneralizedThresholderSettings CbThresholderSettings { get; set; }
 
         public int BlocSize
         {
