@@ -4,7 +4,7 @@ using WindowsFormsTemp.ImagePrimitives;
 
 namespace WindowsFormsTemp.Jpeg
 {
-    internal class JpegThinner
+    public class JpegThinner
     {
         public static readonly JpegThinner Instance = new JpegThinner();
 
@@ -104,7 +104,7 @@ namespace WindowsFormsTemp.Jpeg
 
         #region Thinning Mode Constants
 
-        private static readonly Dictionary<ThinningMode, Tuple<int, int>> ModeToDividers = new Dictionary
+        public static readonly Dictionary<ThinningMode, Tuple<int, int>> ModeToDividers = new Dictionary
             <ThinningMode, Tuple<int, int>>
         {
             {ThinningMode.None, Tuple.Create(1, 1)},

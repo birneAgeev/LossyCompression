@@ -14,9 +14,9 @@ namespace WindowsFormsTemp.Jpeg
         {
         }
 
-        public byte[] Encode(IBitmap bitmap)
+        public byte[] Encode(IBitmap bitmap, JpegCoderSettings settings)
         {
-            JpegThinnerResult thinnerResult = JpegThinner.Instance.ThinOut(bitmap.ToYCrCbBitmap(), ThinningMode.None);
+            JpegThinnerResult thinnerResult = JpegThinner.Instance.ThinOut(bitmap.ToYCrCbBitmap(), settings.ThinningMode);
 
             var result = new JpegData
             {
@@ -25,26 +25,51 @@ namespace WindowsFormsTemp.Jpeg
                 Cb = EncodeComponent(thinnerResult.ImageData.Cb),
                 Width = bitmap.Width,
                 Height = bitmap.Height,
-                ThinningMode = ThinningMode.None
+                Settings = settings
             };
 
             var stream = new MemoryStream();
             var formatter = new BinaryFormatter();
             formatter.Serialize(stream, result);
 
-            var bytes = stream.ToArray();
+            byte[] bytes = stream.ToArray();
 
             return SevenZipCoder.Instance.Encode(bytes);
         }
 
         public IBitmap Decode(byte[] data)
         {
-            var bytes = SevenZipCoder.Instance.Decode(data);
+            byte[] bytes = SevenZipCoder.Instance.Decode(data);
 
             var formatter = new BinaryFormatter();
             var stream = new MemoryStream(bytes);
 
             var jpegData = (JpegData) formatter.Deserialize(stream);
+
+            int widthDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item1;
+            int heightDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item2;
+
+            var thinnerData = new JpegThinnerResult
+            {
+                ImageData = new SeparatedYCrCb
+                {
+                    Y = DecodeComponent(jpegData.Y,
+                        jpegData.Width,
+                        jpegData.Height,
+                        jpegData.Settings.BlocSize),
+                    Cr = DecodeComponent(jpegData.Cr,
+                        jpegData.Width/widthDivisor,
+                        jpegData.Height/heightDivisor,
+                        jpegData.Settings.BlocSize),
+                    Cb = DecodeComponent(jpegData.Cb,
+                        jpegData.Width/widthDivisor,
+                        jpegData.Height/heightDivisor,
+                        jpegData.Settings.BlocSize)
+                },
+                ThinningMode = jpegData.Settings.ThinningMode
+            };
+
+            return JpegThinner.Instance.Decompress(thinnerData);
         }
 
         private short[] EncodeComponent(double[,] matrix)
@@ -60,7 +85,7 @@ namespace WindowsFormsTemp.Jpeg
                     double[,] transformedBlock = JpegDiscreteCosineTransformationCalculator.Instance
                         .ForwardTransform(blockStream.GetBlock(i, j))
                         .Apply(MaxValuesThresholder.Instatnce,
-                            new MaxValuesThresholderSettings {MaxCount = 4});
+                            new MaxValuesThresholderSettings {MaxCount = 64});
                     result.AddRange(ZigZag(transformedBlock));
                 }
             }
@@ -68,16 +93,36 @@ namespace WindowsFormsTemp.Jpeg
             return result.ToArray();
         }
 
-        private double[,] DecodeComponent(short[] data, int width, int height)
+        private double[,] DecodeComponent(short[] data, int width, int height, int blockSize)
         {
-            
+            var result = new double[height, width];
+            int ptr = 0;
+
+            for (int i = 0; i < height; i += blockSize)
+            {
+                for (int j = 0; j < width; j += blockSize)
+                {
+                    double[,] block = ZigZag(data, ptr, blockSize);
+                    block = JpegDiscreteCosineTransformationCalculator.Instance.InverseTransform(block);
+                    ptr += blockSize*blockSize;
+                    for (int y = 0; y < blockSize; ++y)
+                    {
+                        for (int x = 0; x < blockSize; ++x)
+                        {
+                            result[i + y, j + x] = block[y, x];
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
 
-        private double[,] ZigZag(short[] data, int n)
+        private double[,] ZigZag(short[] data, int offset, int blockSize)
         {
-            var result = new double[n, n];
-            var ptr = 0;
-            for (int i = 0; i < n; ++i)
+            var result = new double[blockSize, blockSize];
+            int ptr = offset;
+            for (int i = 0; i < blockSize; ++i)
             {
                 int x = 0;
                 int y = i;
@@ -88,11 +133,11 @@ namespace WindowsFormsTemp.Jpeg
                     --y;
                 }
             }
-            for (int i = 1; i < n; ++i)
+            for (int i = 1; i < blockSize; ++i)
             {
                 int x = i;
-                int y = n - 1;
-                while (x < n)
+                int y = blockSize - 1;
+                while (x < blockSize)
                 {
                     result[y, x] = data[ptr++];
                     ++x;
@@ -112,7 +157,7 @@ namespace WindowsFormsTemp.Jpeg
                 int y = i;
                 while (y >= 0)
                 {
-                    yield return (short)Math.Round(matrix[y, x]);
+                    yield return (short) Math.Round(matrix[y, x]);
                     ++x;
                     --y;
                 }
@@ -123,7 +168,7 @@ namespace WindowsFormsTemp.Jpeg
                 int y = n - 1;
                 while (x < n)
                 {
-                    yield return (short)Math.Round(matrix[y, x]);
+                    yield return (short) Math.Round(matrix[y, x]);
                     ++x;
                     --y;
                 }
@@ -138,7 +183,7 @@ namespace WindowsFormsTemp.Jpeg
             public short[] Cb { get; set; }
             public int Width { get; set; }
             public int Height { get; set; }
-            public ThinningMode ThinningMode { get; set; }
+            public JpegCoderSettings Settings { get; set; }
         }
     }
 }

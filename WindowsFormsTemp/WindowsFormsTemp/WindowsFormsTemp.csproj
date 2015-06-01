@@ -75,6 +75,7 @@
     <Compile Include="Jpeg\IJpegThresholder.cs" />
     <Compile Include="Jpeg\JpegBlockStream.cs" />
     <Compile Include="Jpeg\JpegCoder.cs" />
+    <Compile Include="Jpeg\JpegCoderSettings.cs" />
     <Compile Include="Jpeg\JpegDiscreteCosineTransformationCalculator.cs" />
     <Compile Include="Jpeg\JpegThinnerResult.cs" />
     <Compile Include="Jpeg\MaxValuesThresholder.cs" />
