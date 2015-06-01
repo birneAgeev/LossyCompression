@@ -95,8 +95,12 @@ namespace WindowsFormsTemp
         {
             currentPlainBitmap = initialPlainBitmap;
 
-            currentPlainBitmap =
-                JpegThinner.Instance.Decompress(JpegThinner.Instance.ThinOut(initialPlainBitmap, ThinningMode._2H2V)).ToRgbBitmap();
+            if (JpegCheckBox.Checked)
+                currentPlainBitmap = JpegCoder.Instance.Decode(
+                    JpegCoder.Instance.Encode(currentPlainBitmap, new JpegCoderSettings
+                    {
+                        ThinningMode = ThinningMode._2H2V
+                    })).ToRgbBitmap();
 
             if (invertCheckBox.Checked)
                 currentPlainBitmap = currentPlainBitmap.Apply(InversionFilter.Instance);
@@ -234,6 +238,11 @@ namespace WindowsFormsTemp
         }
 
         private void invertCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void JpegCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             UpdateCheckBox();
         }

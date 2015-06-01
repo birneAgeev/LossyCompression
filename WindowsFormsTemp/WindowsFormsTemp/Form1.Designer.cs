@@ -59,6 +59,8 @@
             this.lbgNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.invertCheckBox = new System.Windows.Forms.CheckBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.JpegCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.currentPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.initialPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uTrackBar)).BeginInit();
@@ -71,6 +73,7 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lbgNumericUpDown)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // currentPictureBox
@@ -334,6 +337,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.tabControl1.Location = new System.Drawing.Point(320, 297);
             this.tabControl1.Name = "tabControl1";
@@ -440,6 +444,28 @@
             this.invertCheckBox.UseVisualStyleBackColor = true;
             this.invertCheckBox.CheckedChanged += new System.EventHandler(this.invertCheckBox_CheckedChanged);
             // 
+            // tabPage5
+            // 
+            this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage5.Controls.Add(this.JpegCheckBox);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(407, 174);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Jpeg";
+            // 
+            // JpegCheckBox
+            // 
+            this.JpegCheckBox.AutoSize = true;
+            this.JpegCheckBox.Location = new System.Drawing.Point(80, 85);
+            this.JpegCheckBox.Name = "JpegCheckBox";
+            this.JpegCheckBox.Size = new System.Drawing.Size(49, 17);
+            this.JpegCheckBox.TabIndex = 0;
+            this.JpegCheckBox.Text = "Jpeg";
+            this.JpegCheckBox.UseVisualStyleBackColor = true;
+            this.JpegCheckBox.CheckedChanged += new System.EventHandler(this.JpegCheckBox_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -474,6 +500,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.lbgNumericUpDown)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -512,6 +540,8 @@
         private System.Windows.Forms.NumericUpDown lbgNumericUpDown;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.CheckBox invertCheckBox;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.CheckBox JpegCheckBox;
     }
 }
 
