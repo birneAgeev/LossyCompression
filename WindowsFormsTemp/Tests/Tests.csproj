@@ -46,6 +46,7 @@
     <Compile Include="JpegBlockStreamTests.cs" />
     <Compile Include="JpegDiscreteCosineTransformationCalculatorTests.cs" />
     <Compile Include="JpegTests.cs" />
+    <Compile Include="JpegThinnerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TempTests.cs" />
   </ItemGroup>

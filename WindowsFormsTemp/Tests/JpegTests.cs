@@ -31,7 +31,10 @@ namespace Tests
         {
             IBitmap bitmap = new Bitmap(DefaultImagePath).ToPlainBitmap();
 
-            byte[] bytes = JpegCoder.Instance.Encode(bitmap);
+            byte[] bytes = JpegCoder.Instance.Encode(bitmap, new JpegCoderSettings
+            {
+                ThinningMode = ThinningMode._2H2V
+            });
 
             Console.WriteLine(bytes.Length);
         }
