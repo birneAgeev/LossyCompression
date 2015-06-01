@@ -23,14 +23,15 @@ namespace WindowsFormsTemp.Jpeg
 
             var curSettings = (MaxValuesThresholderSettings)settings;
 
-            var max = matrix.Cast<double>().OrderBy(x => -x).Skip(curSettings.MaxCount).FirstOrDefault();
+            var max = matrix.Cast<double>().OrderBy(x => -Math.Abs(x)).Skip(curSettings.MaxCount).FirstOrDefault();
+
             var result = new double[matrix.GetLength(0), matrix.GetLength(1)];
             for (var i = 0; i < matrix.GetLength(0); ++i)
             {
                 for (var j = 0; j < matrix.GetLength(1); ++j)
                 {
                     result[i, j] = matrix[i, j];
-                    if (result[i, j] > max)
+                    if (Math.Abs(result[i, j]) < max)
                         result[i, j] = 0.0;
                 }
             }
