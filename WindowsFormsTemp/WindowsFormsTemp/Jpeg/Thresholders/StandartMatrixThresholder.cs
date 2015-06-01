@@ -60,7 +60,20 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
 
         private short[,] GetMatrix(StandartMatrixThresholderSettings settings)
         {
-            return settings.StandartMatrixType == StandartMatrixType.Y ? yMatrix : crcbMatrix;
+            var matrix = (short[,])(settings.StandartMatrixType == StandartMatrixType.Y ? yMatrix.Clone() : crcbMatrix.Clone());
+
+            if (settings.Divisor != 1)
+            {
+                for (var i = 0; i < QuantizationMatrixSize; ++i)
+                {
+                    for (var j = 0; j < QuantizationMatrixSize; ++j)
+                    {
+                        matrix[i, j] = (short) (matrix[i, j]/settings.Divisor);
+                    }
+                }
+            }
+
+            return matrix;
         }
     }
 }

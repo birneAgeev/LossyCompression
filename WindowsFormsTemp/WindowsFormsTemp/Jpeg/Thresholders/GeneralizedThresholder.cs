@@ -23,6 +23,9 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
             if (curSettings.ThresholderType == ThresholderType.MaxValuesThresholder)
                 return matrix.Threshold(MaxValuesThresholder.Instance,
                     curSettings.MaxValuesThresholderSettings);
+            if (curSettings.ThresholderType == ThresholderType.StandartMatrixThresholder)
+                return matrix.Threshold(StandartMatrixThresholder.Instance,
+                    curSettings.StandartMatrixThresholderSettings);
 
             return matrix;
         }
@@ -40,6 +43,9 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
             if (curSettings.ThresholderType == ThresholderType.MaxValuesThresholder)
                 return matrix.Restore(MaxValuesThresholder.Instance,
                     curSettings.MaxValuesThresholderSettings);
+            if (curSettings.ThresholderType == ThresholderType.StandartMatrixThresholder)
+                return matrix.Restore(StandartMatrixThresholder.Instance,
+                    curSettings.StandartMatrixThresholderSettings);
 
             return matrix;
         }

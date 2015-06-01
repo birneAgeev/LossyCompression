@@ -5,7 +5,8 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
     [Serializable]
     public class StandartMatrixThresholderSettings : IJpegThresholderSettings
     {
-         public StandartMatrixType StandartMatrixType { get; set; }
+        public StandartMatrixType StandartMatrixType { get; set; }
+        public short Divisor { get; set; }
     }
 
     public enum StandartMatrixType

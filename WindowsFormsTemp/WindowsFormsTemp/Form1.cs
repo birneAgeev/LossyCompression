@@ -115,51 +115,74 @@ namespace WindowsFormsTemp
 
                 if (ByMaxValueRadioButton.Checked)
                 {
-                    MaxCountNumericUpDown.Enabled = true;
+                    YMaxCountNumericUpDown.Enabled = true;
+                    CMaxCountNumericUpDown.Enabled = true;
                     yThresholderSettings = new GeneralizedThresholderSettings
                     {
                         ThresholderType = ThresholderType.MaxValuesThresholder,
                         MaxValuesThresholderSettings = new MaxValuesThresholderSettings
                         {
-                            MaxCount = (int) MaxCountNumericUpDown.Value
+                            MaxCount = (int) YMaxCountNumericUpDown.Value
                         }
                     };
-                    crcbThresholderSettings = yThresholderSettings;
+                    crcbThresholderSettings = new GeneralizedThresholderSettings
+                    {
+                        ThresholderType = ThresholderType.MaxValuesThresholder,
+                        MaxValuesThresholderSettings = new MaxValuesThresholderSettings
+                        {
+                            MaxCount = (int)CMaxCountNumericUpDown.Value
+                        }
+                    };
                 }
                 else
                 {
-                    MaxCountNumericUpDown.Enabled = false;
+                    YMaxCountNumericUpDown.Enabled = false;
+                    CMaxCountNumericUpDown.Enabled = false;
                 }
 
                 if (CustomMatrixRadioButton.Checked)
                 {
-                    AlphaNumericUpDown.Enabled = true;
-                    GammaNumericUpDown.Enabled = true;
+                    YAlphaNumericUpDown.Enabled = true;
+                    YGammaNumericUpDown.Enabled = true;
+                    CAlphaNumericUpDown.Enabled = true;
+                    CGammaNumericUpDown.Enabled = true;
                     yThresholderSettings = new GeneralizedThresholderSettings
                     {
                         ThresholderType = ThresholderType.CustomMatrixThresholder,
                         CustomMatrixThresholderSettings = new CustomMatrixThresholderSettings
                         {
-                            Alpha = (short) AlphaNumericUpDown.Value,
-                            Gamma = (short) GammaNumericUpDown.Value
+                            Alpha = (short) YAlphaNumericUpDown.Value,
+                            Gamma = (short) YGammaNumericUpDown.Value
                         }
                     };
-                    crcbThresholderSettings = yThresholderSettings;
+                    crcbThresholderSettings = new GeneralizedThresholderSettings
+                    {
+                        ThresholderType = ThresholderType.CustomMatrixThresholder,
+                        CustomMatrixThresholderSettings = new CustomMatrixThresholderSettings
+                        {
+                            Alpha = (short)CAlphaNumericUpDown.Value,
+                            Gamma = (short)CGammaNumericUpDown.Value
+                        }
+                    };
                 }
                 else
                 {
-                    AlphaNumericUpDown.Enabled = false;
-                    GammaNumericUpDown.Enabled = false;
+                    YAlphaNumericUpDown.Enabled = false;
+                    YGammaNumericUpDown.Enabled = false;
+                    CAlphaNumericUpDown.Enabled = false;
+                    CGammaNumericUpDown.Enabled = false;
                 }
 
                 if (StandartMatrixRadioButton.Checked)
                 {
+                    Div2CheckBox.Enabled = true;
                     yThresholderSettings = new GeneralizedThresholderSettings
                     {
                         ThresholderType = ThresholderType.StandartMatrixThresholder,
                         StandartMatrixThresholderSettings = new StandartMatrixThresholderSettings
                         {
-                            StandartMatrixType = StandartMatrixType.Y
+                            StandartMatrixType = StandartMatrixType.Y,
+                            Divisor = (short) (Div2CheckBox.Checked ? 2 : 1)
                         }
                     };
                     crcbThresholderSettings = new GeneralizedThresholderSettings
@@ -167,9 +190,14 @@ namespace WindowsFormsTemp
                         ThresholderType = ThresholderType.StandartMatrixThresholder,
                         StandartMatrixThresholderSettings = new StandartMatrixThresholderSettings
                         {
-                            StandartMatrixType = StandartMatrixType.CrCb
+                            StandartMatrixType = StandartMatrixType.CrCb,
+                            Divisor = (short) (Div2CheckBox.Checked ? 2 : 1)
                         }
                     };
+                }
+                else
+                {
+                    Div2CheckBox.Enabled = false;
                 }
 
                 byte[] encodedBytes = JpegCoder.Instance.Encode(currentPlainBitmap, new JpegCoderSettings
@@ -191,9 +219,13 @@ namespace WindowsFormsTemp
                 ByMaxValueRadioButton.Enabled = false;
                 CustomMatrixRadioButton.Enabled = false;
                 StandartMatrixRadioButton.Enabled = false;
-                MaxCountNumericUpDown.Enabled = false;
-                AlphaNumericUpDown.Enabled = false;
-                GammaNumericUpDown.Enabled = false;
+                YMaxCountNumericUpDown.Enabled = false;
+                CMaxCountNumericUpDown.Enabled = false;
+                YAlphaNumericUpDown.Enabled = false;
+                YGammaNumericUpDown.Enabled = false;
+                CAlphaNumericUpDown.Enabled = false;
+                CGammaNumericUpDown.Enabled = false;
+                Div2CheckBox.Enabled = false;
                 label14.Text = Resources.MainForm_UpdateCheckBox__;
                 label15.Text = Resources.MainForm_UpdateCheckBox__;
             }
@@ -385,6 +417,26 @@ namespace WindowsFormsTemp
         }
 
         private void GammaNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void CNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void CAlphaNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void CGammaNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void Div2CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             UpdateCheckBox();
         }
