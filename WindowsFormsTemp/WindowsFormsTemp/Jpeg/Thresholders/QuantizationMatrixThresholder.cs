@@ -4,10 +4,9 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
 {
     public class QuantizationMatrixThresholder : IJpegThresholder
     {
-        public static QuantizationMatrixThresholder Instance = new QuantizationMatrixThresholder();
-
-        protected short[,] QuantizationMatrix;
         protected const int QuantizationMatrixSize = 8;
+        public static QuantizationMatrixThresholder Instance = new QuantizationMatrixThresholder();
+        protected short[,] QuantizationMatrix;
 
         protected QuantizationMatrixThresholder()
         {
@@ -29,7 +28,7 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
                 for (var j = 0; j < QuantizationMatrixSize; ++j)
                 {
 // ReSharper disable once PossibleLossOfFraction
-                    result[i, j] = (short)Math.Round(matrix[i, j])/QuantizationMatrix[i, j];
+                    result[i, j] = (short) Math.Round(matrix[i, j])/QuantizationMatrix[i, j];
                 }
             }
 

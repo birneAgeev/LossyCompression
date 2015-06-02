@@ -16,7 +16,7 @@ namespace WindowsFormsTemp.Jpeg
         {
             var inputStream = new MemoryStream(data);
             var outputStream = new MemoryStream();
-            
+
             var coder = new Encoder();
             coder.WriteCoderProperties(outputStream);
             outputStream.Write(BitConverter.GetBytes(inputStream.Length), 0, 8);

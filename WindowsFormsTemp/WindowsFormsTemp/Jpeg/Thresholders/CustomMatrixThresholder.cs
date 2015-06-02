@@ -44,11 +44,11 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
                 return result;
 
             result = new short[QuantizationMatrixSize, QuantizationMatrixSize];
-            for (int i = 0; i < QuantizationMatrixSize; ++i)
+            for (var i = 0; i < QuantizationMatrixSize; ++i)
             {
-                for (int j = 0; j < QuantizationMatrixSize; ++j)
+                for (var j = 0; j < QuantizationMatrixSize; ++j)
                 {
-                    result[i, j] = (short)(settings.Alpha*(1 + settings.Gamma*(i + j + 2)));
+                    result[i, j] = (short) (settings.Alpha*(1 + settings.Gamma*(i + j + 2)));
                 }
             }
 

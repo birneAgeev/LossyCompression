@@ -16,7 +16,7 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
             if (!(settings is MaxValuesThresholderSettings))
                 throw new ArgumentException("settings id not MaxValuesThresholderSettings");
 
-            var curSettings = (MaxValuesThresholderSettings)settings;
+            var curSettings = (MaxValuesThresholderSettings) settings;
 
             var max = matrix.Cast<double>().OrderBy(x => -Math.Abs(x)).Skip(curSettings.MaxCount).FirstOrDefault();
 

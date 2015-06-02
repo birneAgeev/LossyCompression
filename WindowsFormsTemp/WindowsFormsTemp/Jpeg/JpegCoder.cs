@@ -17,7 +17,7 @@ namespace WindowsFormsTemp.Jpeg
 
         public byte[] Encode(IBitmap bitmap, JpegCoderSettings settings)
         {
-            JpegThinnerResult thinnerResult = JpegThinner.Instance.ThinOut(bitmap.ToYCrCbBitmap(), settings.ThinningMode);
+            var thinnerResult = JpegThinner.Instance.ThinOut(bitmap.ToYCrCbBitmap(), settings.ThinningMode);
 
             var result = new JpegData
             {
@@ -33,22 +33,22 @@ namespace WindowsFormsTemp.Jpeg
             var formatter = new BinaryFormatter();
             formatter.Serialize(stream, result);
 
-            byte[] bytes = stream.ToArray();
+            var bytes = stream.ToArray();
 
             return SevenZipCoder.Instance.Encode(bytes);
         }
 
         public IBitmap Decode(byte[] data)
         {
-            byte[] bytes = SevenZipCoder.Instance.Decode(data);
+            var bytes = SevenZipCoder.Instance.Decode(data);
 
             var formatter = new BinaryFormatter();
             var stream = new MemoryStream(bytes);
 
             var jpegData = (JpegData) formatter.Deserialize(stream);
 
-            int widthDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item1;
-            int heightDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item2;
+            var widthDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item1;
+            var heightDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item2;
 
             var thinnerData = new JpegThinnerResult
             {
@@ -82,11 +82,11 @@ namespace WindowsFormsTemp.Jpeg
 
             var blockStream = new JpegBlockStream(matrix);
 
-            for (int i = 0; i < blockStream.HeightInBlocks; ++i)
+            for (var i = 0; i < blockStream.HeightInBlocks; ++i)
             {
-                for (int j = 0; j < blockStream.WidthInBlocks; ++j)
+                for (var j = 0; j < blockStream.WidthInBlocks; ++j)
                 {
-                    double[,] transformedBlock = JpegDiscreteCosineTransformationCalculator.Instance
+                    var transformedBlock = JpegDiscreteCosineTransformationCalculator.Instance
                         .ForwardTransform(blockStream.GetBlock(i, j))
                         .Threshold(GeneralizedThresholder.Instance,
                             settings);
@@ -97,22 +97,23 @@ namespace WindowsFormsTemp.Jpeg
             return result.ToArray();
         }
 
-        private double[,] DecodeComponent(short[] data, int width, int height, int blockSize, GeneralizedThresholderSettings settings)
+        private double[,] DecodeComponent(short[] data, int width, int height, int blockSize,
+            GeneralizedThresholderSettings settings)
         {
             var result = new double[height, width];
-            int ptr = 0;
+            var ptr = 0;
 
-            for (int i = 0; i < height; i += blockSize)
+            for (var i = 0; i < height; i += blockSize)
             {
-                for (int j = 0; j < width; j += blockSize)
+                for (var j = 0; j < width; j += blockSize)
                 {
-                    double[,] block = ZigZag(data, ptr, blockSize)
+                    var block = ZigZag(data, ptr, blockSize)
                         .Restore(GeneralizedThresholder.Instance, settings);
                     block = JpegDiscreteCosineTransformationCalculator.Instance.InverseTransform(block);
                     ptr += blockSize*blockSize;
-                    for (int y = 0; y < blockSize; ++y)
+                    for (var y = 0; y < blockSize; ++y)
                     {
-                        for (int x = 0; x < blockSize; ++x)
+                        for (var x = 0; x < blockSize; ++x)
                         {
                             result[i + y, j + x] = block[y, x];
                         }
@@ -126,11 +127,11 @@ namespace WindowsFormsTemp.Jpeg
         private double[,] ZigZag(short[] data, int offset, int blockSize)
         {
             var result = new double[blockSize, blockSize];
-            int ptr = offset;
-            for (int i = 0; i < blockSize; ++i)
+            var ptr = offset;
+            for (var i = 0; i < blockSize; ++i)
             {
-                int x = 0;
-                int y = i;
+                var x = 0;
+                var y = i;
                 while (y >= 0)
                 {
                     result[y, x] = data[ptr++];
@@ -138,10 +139,10 @@ namespace WindowsFormsTemp.Jpeg
                     --y;
                 }
             }
-            for (int i = 1; i < blockSize; ++i)
+            for (var i = 1; i < blockSize; ++i)
             {
-                int x = i;
-                int y = blockSize - 1;
+                var x = i;
+                var y = blockSize - 1;
                 while (x < blockSize)
                 {
                     result[y, x] = data[ptr++];
@@ -155,11 +156,11 @@ namespace WindowsFormsTemp.Jpeg
 
         private IEnumerable<short> ZigZag(double[,] matrix)
         {
-            int n = matrix.GetLength(0);
-            for (int i = 0; i < n; ++i)
+            var n = matrix.GetLength(0);
+            for (var i = 0; i < n; ++i)
             {
-                int x = 0;
-                int y = i;
+                var x = 0;
+                var y = i;
                 while (y >= 0)
                 {
                     yield return (short) Math.Round(matrix[y, x]);
@@ -167,10 +168,10 @@ namespace WindowsFormsTemp.Jpeg
                     --y;
                 }
             }
-            for (int i = 1; i < n; ++i)
+            for (var i = 1; i < n; ++i)
             {
-                int x = i;
-                int y = n - 1;
+                var x = i;
+                var y = n - 1;
                 while (x < n)
                 {
                     yield return (short) Math.Round(matrix[y, x]);

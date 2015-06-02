@@ -6,18 +6,6 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
     {
         public new static StandartMatrixThresholder Instance = new StandartMatrixThresholder();
 
-        private readonly short[,] yMatrix =
-        {
-            {16, 11, 10, 16, 24, 40, 51, 61},
-            {12, 12, 14, 19, 26, 58, 60, 55},
-            {14, 13, 16, 24, 40, 57, 69, 56},
-            {14, 17, 22, 29, 51, 87, 80, 62},
-            {18, 22, 37, 56, 68, 109, 103, 77},
-            {24, 35, 55, 64, 81, 104, 113, 92},
-            {49, 64, 78, 87, 103, 121, 120, 101},
-            {72, 92, 95, 98, 112, 100, 103, 99}
-        };
-
         private readonly short[,] crcbMatrix =
         {
             {17, 18, 24, 47, 99, 99, 99, 99},
@@ -28,6 +16,18 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
             {99, 99, 99, 99, 99, 99, 99, 99},
             {99, 99, 99, 99, 99, 99, 99, 99},
             {99, 99, 99, 99, 99, 99, 99, 99}
+        };
+
+        private readonly short[,] yMatrix =
+        {
+            {16, 11, 10, 16, 24, 40, 51, 61},
+            {12, 12, 14, 19, 26, 58, 60, 55},
+            {14, 13, 16, 24, 40, 57, 69, 56},
+            {14, 17, 22, 29, 51, 87, 80, 62},
+            {18, 22, 37, 56, 68, 109, 103, 77},
+            {24, 35, 55, 64, 81, 104, 113, 92},
+            {49, 64, 78, 87, 103, 121, 120, 101},
+            {72, 92, 95, 98, 112, 100, 103, 99}
         };
 
         private StandartMatrixThresholder()
@@ -60,7 +60,8 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
 
         private short[,] GetMatrix(StandartMatrixThresholderSettings settings)
         {
-            var matrix = (short[,])(settings.StandartMatrixType == StandartMatrixType.Y ? yMatrix.Clone() : crcbMatrix.Clone());
+            var matrix =
+                (short[,]) (settings.StandartMatrixType == StandartMatrixType.Y ? yMatrix.Clone() : crcbMatrix.Clone());
 
             if (settings.Divisor != 1)
             {

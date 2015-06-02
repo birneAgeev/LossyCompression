@@ -82,7 +82,7 @@ namespace WindowsFormsTemp
             initialPictureBox.Image = initialPlainBitmap.ToDotNetBitmap();
             currentPictureBox.Image = currentPlainBitmap.ToDotNetBitmap();
 
-            string psnrText = PsnrCalculator.Instance.Calculate(initialPlainBitmap, currentPlainBitmap)
+            var psnrText = PsnrCalculator.Instance.Calculate(initialPlainBitmap, currentPlainBitmap)
                 .ToString("F3", CultureInfo.InvariantCulture);
 
             if (psnrText == "Infinity")
@@ -130,7 +130,7 @@ namespace WindowsFormsTemp
                         ThresholderType = ThresholderType.MaxValuesThresholder,
                         MaxValuesThresholderSettings = new MaxValuesThresholderSettings
                         {
-                            MaxCount = (int)CMaxCountNumericUpDown.Value
+                            MaxCount = (int) CMaxCountNumericUpDown.Value
                         }
                     };
                 }
@@ -160,8 +160,8 @@ namespace WindowsFormsTemp
                         ThresholderType = ThresholderType.CustomMatrixThresholder,
                         CustomMatrixThresholderSettings = new CustomMatrixThresholderSettings
                         {
-                            Alpha = (short)CAlphaNumericUpDown.Value,
-                            Gamma = (short)CGammaNumericUpDown.Value
+                            Alpha = (short) CAlphaNumericUpDown.Value,
+                            Gamma = (short) CGammaNumericUpDown.Value
                         }
                     };
                 }
@@ -200,7 +200,7 @@ namespace WindowsFormsTemp
                     Div2CheckBox.Enabled = false;
                 }
 
-                byte[] encodedBytes = JpegCoder.Instance.Encode(currentPlainBitmap, new JpegCoderSettings
+                var encodedBytes = JpegCoder.Instance.Encode(currentPlainBitmap, new JpegCoderSettings
                 {
                     ThinningMode = GetThinningMode(ThinningModeComboBox.Text),
                     YThresholderSettings = yThresholderSettings,
@@ -311,7 +311,7 @@ namespace WindowsFormsTemp
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            int size = Math.Min(Size.Width*256/859, Size.Height*256/547);
+            var size = Math.Min(Size.Width*256/859, Size.Height*256/547);
             currentPictureBox.Size = new Size(size, size);
             initialPictureBox.Size = new Size(size, size);
 

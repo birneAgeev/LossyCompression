@@ -35,7 +35,7 @@ namespace WindowsFormsTemp.Jpeg.Thresholders
             if (!(settings is GeneralizedThresholderSettings))
                 throw new ArgumentException("settings is not GeneralizedThresholderSettings.");
 
-            var curSettings = (GeneralizedThresholderSettings)settings;
+            var curSettings = (GeneralizedThresholderSettings) settings;
 
             if (curSettings.ThresholderType == ThresholderType.CustomMatrixThresholder)
                 return matrix.Restore(CustomMatrixThresholder.Instance,
