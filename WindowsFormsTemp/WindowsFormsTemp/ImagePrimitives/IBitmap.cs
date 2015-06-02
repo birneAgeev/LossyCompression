@@ -41,6 +41,10 @@ namespace WindowsFormsTemp.ImagePrimitives
 
         public static IBitmap<YCrCbPixel> ToYCrCbBitmap(this IBitmap bitmap)
         {
+            var ycrcbBitmap = bitmap as IBitmap<YCrCbPixel>;
+            if (ycrcbBitmap != null)
+                return ycrcbBitmap;
+
             var rgbBitmap = bitmap.ToRgbBitmap();
             var result = new PlainBitmap<YCrCbPixel>(rgbBitmap.Width, rgbBitmap.Height);
             for (var row = 0; row < rgbBitmap.Height; ++row)

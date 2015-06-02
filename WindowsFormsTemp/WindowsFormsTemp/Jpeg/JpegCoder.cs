@@ -47,8 +47,8 @@ namespace WindowsFormsTemp.Jpeg
 
             var jpegData = (JpegData) formatter.Deserialize(stream);
 
-            var widthDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item1;
-            var heightDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item2;
+            var widthDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item2;
+            var heightDivisor = JpegThinner.ModeToDividers[jpegData.Settings.ThinningMode].Item1;
 
             var thinnerData = new JpegThinnerResult
             {

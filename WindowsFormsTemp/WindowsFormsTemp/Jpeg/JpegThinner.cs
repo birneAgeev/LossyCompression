@@ -48,8 +48,8 @@ namespace WindowsFormsTemp.Jpeg
         private static YCrCbPixel DecompressPixel(int row, int column, JpegThinnerResult compressedData)
         {
             var mode = compressedData.ThinningMode;
-            var heightDivider = ModeToDividers[mode].Item2;
-            var widthDivider = ModeToDividers[mode].Item1;
+            var heightDivider = ModeToDividers[mode].Item1;
+            var widthDivider = ModeToDividers[mode].Item2;
 
             return new YCrCbPixel
             {
@@ -87,7 +87,7 @@ namespace WindowsFormsTemp.Jpeg
                     {
                         for (var j = 0; j < 2; ++j)
                         {
-                            if (!template[i][j])
+                            if (!template[i][j] || !InBounds(bitmap, row + i, column + j))
                                 continue;
                             var pixel = bitmap.GetPixel(row + i, column + j);
                             result[(row + i)/heightDivider, (column + j)/widthDivider] =
@@ -100,6 +100,12 @@ namespace WindowsFormsTemp.Jpeg
             }
 
             return result;
+        }
+
+        private static bool InBounds(IBitmap bitmap, int row, int column)
+        {
+            return row >= 0 && row < bitmap.Height &&
+                   column >= 0 && column < bitmap.Width;
         }
 
         #region Thinning Mode Constants
