@@ -4,10 +4,11 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using WindowsFormsTemp.Calculator;
+using WindowsFormsTemp.Compression.CompressionCommons;
+using WindowsFormsTemp.Compression.Jpeg;
+using WindowsFormsTemp.Compression.Jpeg.Thresholders;
 using WindowsFormsTemp.Filters;
 using WindowsFormsTemp.ImagePrimitives;
-using WindowsFormsTemp.Jpeg;
-using WindowsFormsTemp.Jpeg.Thresholders;
 using WindowsFormsTemp.Properties;
 
 namespace WindowsFormsTemp

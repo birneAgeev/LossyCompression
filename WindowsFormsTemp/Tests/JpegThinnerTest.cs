@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using WindowsFormsTemp.Compression.CompressionCommons;
+using WindowsFormsTemp.Compression.Jpeg;
 using WindowsFormsTemp.ImagePrimitives;
-using WindowsFormsTemp.Jpeg;
 using NUnit.Framework;
 
 namespace Tests
@@ -17,7 +18,7 @@ namespace Tests
             var bitmap = new Bitmap(DefaultImagePath).ToPlainBitmap().ToYCrCbBitmap();
             var result =
                 (IBitmap<YCrCbPixel>)
-                    JpegThinner.Instance.Decompress(JpegThinner.Instance.ThinOut(bitmap, ThinningMode.None));
+                    Thinner.Instance.Decompress(Thinner.Instance.ThinOut(bitmap, ThinningMode.None));
 
             for (var i = 0; i < bitmap.Height; ++i)
             {
@@ -48,7 +49,7 @@ namespace Tests
                 }
             }
 
-            var thinned = JpegThinner.Instance.ThinOut(bitmap, ThinningMode._1H2V).ImageData;
+            var thinned = Thinner.Instance.ThinOut(bitmap, ThinningMode._1H2V).ImageData;
 
             for (var i = 0; i < 5; ++i)
             {
@@ -82,7 +83,7 @@ namespace Tests
             Console.WriteLine(@"---------------------");
 
             var decompressed =
-                JpegThinner.Instance.Decompress(JpegThinner.Instance.ThinOut(bitmap, ThinningMode._1H2V))
+                Thinner.Instance.Decompress(Thinner.Instance.ThinOut(bitmap, ThinningMode._1H2V))
                     .ToYCrCbBitmap();
 
             for (var i = 0; i < 5; ++i)
@@ -135,7 +136,7 @@ namespace Tests
                 }
             }
 
-            var thinned = JpegThinner.Instance.ThinOut(bitmap, ThinningMode._2H1V).ImageData;
+            var thinned = Thinner.Instance.ThinOut(bitmap, ThinningMode._2H1V).ImageData;
 
             for (var i = 0; i < 5; ++i)
             {
@@ -169,7 +170,7 @@ namespace Tests
             Console.WriteLine(@"---------------------");
 
             var decompressed =
-                JpegThinner.Instance.Decompress(JpegThinner.Instance.ThinOut(bitmap, ThinningMode._2H1V))
+                Thinner.Instance.Decompress(Thinner.Instance.ThinOut(bitmap, ThinningMode._2H1V))
                     .ToYCrCbBitmap();
 
             for (var i = 0; i < 5; ++i)
@@ -222,7 +223,7 @@ namespace Tests
                 }
             }
 
-            var thinned = JpegThinner.Instance.ThinOut(bitmap, ThinningMode._2H1V).ImageData;
+            var thinned = Thinner.Instance.ThinOut(bitmap, ThinningMode._2H1V).ImageData;
 
             for (var i = 0; i < 4; ++i)
             {
@@ -256,7 +257,7 @@ namespace Tests
             Console.WriteLine(@"---------------------");
 
             var decompressed =
-                JpegThinner.Instance.Decompress(JpegThinner.Instance.ThinOut(bitmap, ThinningMode._2H1V))
+                Thinner.Instance.Decompress(Thinner.Instance.ThinOut(bitmap, ThinningMode._2H1V))
                     .ToYCrCbBitmap();
 
             for (var i = 0; i < 4; ++i)

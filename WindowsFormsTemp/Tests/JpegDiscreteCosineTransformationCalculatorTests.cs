@@ -1,5 +1,5 @@
 ﻿using System;
-using WindowsFormsTemp.Jpeg;
+using WindowsFormsTemp.Compression.Jpeg;
 using NUnit.Framework;
 
 namespace Tests

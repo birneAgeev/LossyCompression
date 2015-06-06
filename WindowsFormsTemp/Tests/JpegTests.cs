@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using WindowsFormsTemp.Compression.CompressionCommons;
+using WindowsFormsTemp.Compression.Jpeg;
 using WindowsFormsTemp.ImagePrimitives;
-using WindowsFormsTemp.Jpeg;
 using NUnit.Framework;
 
 namespace Tests
