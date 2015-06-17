@@ -20,11 +20,11 @@ namespace WindowsFormsTemp.Compression.Wavelet
 
         public void Transform(double[,] matrix, int width, int height, int order)
         {
-            for (int i = 0; i < height; ++i)
+            for (var i = 0; i < height; ++i)
             {
                 matrix.SetRow(Convolute(matrix.GetRow(i), Transformations[order]), i);
             }
-            for (int i = 0; i < width; ++i)
+            for (var i = 0; i < width; ++i)
             {
                 matrix.SetColumn(Convolute(matrix.GetColumn(i), Transformations[order]), i);
             }
@@ -33,16 +33,16 @@ namespace WindowsFormsTemp.Compression.Wavelet
         private static double[] Convolute(double[] vector, double[] transform, int delta = 0)
         {
             var result = new double[vector.Length];
-            double[] lowFilter = transform;
-            double[] highFilter = GetHighFilter(transform);
+            var lowFilter = transform;
+            var highFilter = GetHighFilter(transform);
 
-            for (int i = 0; i < vector.Length; i += 2)
+            for (var i = 0; i < vector.Length; i += 2)
             {
-                double sumLow = 0.0;
-                double sumHigh = 0.0;
-                for (int j = 0; j < transform.Length; ++j)
+                var sumLow = 0.0;
+                var sumHigh = 0.0;
+                for (var j = 0; j < transform.Length; ++j)
                 {
-                    int index = (i + j - delta + transform.Length)%transform.Length; //out of range
+                    var index = (i + j - delta + transform.Length)%transform.Length; //out of range
                     sumLow += vector[index]*lowFilter[j];
                     sumHigh += vector[index]*highFilter[j];
                 }
@@ -56,8 +56,8 @@ namespace WindowsFormsTemp.Compression.Wavelet
         private static double[] GetHighFilter(double[] transform)
         {
             var result = new double[transform.Length];
-            int pow = 1;
-            for (int i = 0; i < transform.Length; ++i)
+            var pow = 1;
+            for (var i = 0; i < transform.Length; ++i)
             {
                 result[i] = pow*transform[transform.Length - i - 1];
                 pow *= -1;
@@ -71,15 +71,15 @@ namespace WindowsFormsTemp.Compression.Wavelet
     {
         public static double[] GetRow(this double[,] matrix, int rowIndex)
         {
-            int width = matrix.GetLength(1);
+            var width = matrix.GetLength(1);
             return matrix.Cast<double>().Skip(width*rowIndex).Take(width).ToArray();
         }
 
         public static double[] GetColumn(this double[,] matrix, int columnIndex)
         {
-            int height = matrix.GetLength(0);
+            var height = matrix.GetLength(0);
             var result = new double[height];
-            for (int i = 0; i < height; ++i)
+            for (var i = 0; i < height; ++i)
             {
                 result[i] = matrix[i, columnIndex];
             }
@@ -91,7 +91,7 @@ namespace WindowsFormsTemp.Compression.Wavelet
             if (matrix.GetLength(1) != row.Length)
                 throw new Exception("Non equal dimetions");
 
-            for (int i = 0; i < row.Length; ++i)
+            for (var i = 0; i < row.Length; ++i)
             {
                 matrix[rowIndex, i] = row[i];
             }
@@ -102,7 +102,7 @@ namespace WindowsFormsTemp.Compression.Wavelet
             if (matrix.GetLength(0) != column.Length)
                 throw new Exception("Non equal dimetions");
 
-            for (int i = 0; i < column.Length; ++i)
+            for (var i = 0; i < column.Length; ++i)
             {
                 matrix[i, columnIndex] = column[i];
             }

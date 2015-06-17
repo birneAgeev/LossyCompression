@@ -30,9 +30,9 @@ namespace Tests
         [Test]
         public void Test()
         {
-            IBitmap bitmap = new Bitmap(DefaultImagePath).ToPlainBitmap();
+            var bitmap = new Bitmap(DefaultImagePath).ToPlainBitmap();
 
-            byte[] bytes = JpegCoder.Instance.Encode(bitmap, new JpegCoderSettings
+            var bytes = JpegCoder.Instance.Encode(bitmap, new JpegCoderSettings
             {
                 ThinningMode = ThinningMode._2H2V
             });

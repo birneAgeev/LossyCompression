@@ -7,7 +7,7 @@ using WindowsFormsTemp.ImagePrimitives;
 
 namespace WindowsFormsTemp.Compression.Wavelet
 {
-    class WaveletCoder : IWaveletCoder
+    internal class WaveletCoder : IWaveletCoder
     {
         public byte[] Encode(IBitmap bitmap, WaveletCoderSettings settings)
         {
@@ -29,6 +29,10 @@ namespace WindowsFormsTemp.Compression.Wavelet
             return SevenZipCoder.Instance.Encode(bytes);
         }
 
+        public IBitmap Decode(byte[] data)
+        {
+        }
+
         private static short[,] EncodeComponent(double[,] matrix, int depth)
         {
             var height = matrix.GetLength(0);
@@ -43,20 +47,15 @@ namespace WindowsFormsTemp.Compression.Wavelet
             {
                 for (var j = 0; j < width; ++j)
                 {
-                    result[i, j] = (short)Math.Round(matrix[i, j]);
+                    result[i, j] = (short) Math.Round(matrix[i, j]);
                 }
             }
 
             return result;
         }
 
-        public IBitmap Decode(byte[] data)
-        {
-            
-        }
-
         [Serializable]
-        private class WaveletData 
+        private class WaveletData
         {
             public short[,] Y { get; set; }
             public short[,] Cr { get; set; }

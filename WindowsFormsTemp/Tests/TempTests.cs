@@ -9,11 +9,11 @@ namespace Tests
     {
         private IEnumerable<int> ZigZag(int[,] matrix)
         {
-            int n = matrix.GetLength(0);
-            for (int i = 0; i < n; ++i)
+            var n = matrix.GetLength(0);
+            for (var i = 0; i < n; ++i)
             {
-                int x = 0;
-                int y = i;
+                var x = 0;
+                var y = i;
                 while (y >= 0)
                 {
                     yield return matrix[y, x];
@@ -21,10 +21,10 @@ namespace Tests
                     --y;
                 }
             }
-            for (int i = 1; i < n; ++i)
+            for (var i = 1; i < n; ++i)
             {
-                int x = i;
-                int y = n - 1;
+                var x = i;
+                var y = n - 1;
                 while (x < n)
                 {
                     yield return matrix[y, x];
@@ -41,7 +41,7 @@ namespace Tests
             {
                 {1, 3, 6},
                 {2, 5, 9},
-                {4, 8, 12},
+                {4, 8, 12}
             };
 
             foreach (var x in ZigZag(matrix))

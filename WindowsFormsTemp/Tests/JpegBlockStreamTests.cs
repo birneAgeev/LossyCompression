@@ -19,7 +19,7 @@ namespace Tests
             };
 
             var stream = new JpegBlockStream(source, 4);
-            
+
             Assert.AreEqual(new double[,]
             {
                 {25, 26, 26, 26},
