@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace WindowsFormsTemp.Compression.Wavelet
 {
@@ -22,11 +21,11 @@ namespace WindowsFormsTemp.Compression.Wavelet
         {
             for (var i = 0; i < height; ++i)
             {
-                matrix.SetRow(Convolute(matrix.GetRow(i), Transformations[order]), i);
+                matrix.SetRow(Convolute(matrix.GetRow(i, width, height), Transformations[order]), i);
             }
             for (var i = 0; i < width; ++i)
             {
-                matrix.SetColumn(Convolute(matrix.GetColumn(i), Transformations[order]), i);
+                matrix.SetColumn(Convolute(matrix.GetColumn(i, width, height), Transformations[order]), i);
             }
         }
 
@@ -42,7 +41,7 @@ namespace WindowsFormsTemp.Compression.Wavelet
                 var sumHigh = 0.0;
                 for (var j = 0; j < transform.Length; ++j)
                 {
-                    var index = (i + j - delta + transform.Length)%transform.Length; //out of range
+                    var index = (i + j - delta + vector.Length)%vector.Length; //out of range
                     sumLow += vector[index]*lowFilter[j];
                     sumHigh += vector[index]*highFilter[j];
                 }
@@ -67,17 +66,20 @@ namespace WindowsFormsTemp.Compression.Wavelet
         }
     }
 
-    public static class MatrixHelper //перепилить на локальные индексы
+    public static class MatrixHelper
     {
-        public static double[] GetRow(this double[,] matrix, int rowIndex)
+        public static double[] GetRow(this double[,] matrix, int rowIndex, int width, int height)
         {
-            var width = matrix.GetLength(1);
-            return matrix.Cast<double>().Skip(width*rowIndex).Take(width).ToArray();
+            var result = new double[width];
+            for (var i = 0; i < width; ++i)
+            {
+                result[i] = matrix[rowIndex, i];
+            }
+            return result;
         }
 
-        public static double[] GetColumn(this double[,] matrix, int columnIndex)
+        public static double[] GetColumn(this double[,] matrix, int columnIndex, int width, int height)
         {
-            var height = matrix.GetLength(0);
             var result = new double[height];
             for (var i = 0; i < height; ++i)
             {
@@ -88,9 +90,6 @@ namespace WindowsFormsTemp.Compression.Wavelet
 
         public static void SetRow(this double[,] matrix, double[] row, int rowIndex)
         {
-            if (matrix.GetLength(1) != row.Length)
-                throw new Exception("Non equal dimetions");
-
             for (var i = 0; i < row.Length; ++i)
             {
                 matrix[rowIndex, i] = row[i];
@@ -99,9 +98,6 @@ namespace WindowsFormsTemp.Compression.Wavelet
 
         public static void SetColumn(this double[,] matrix, double[] column, int columnIndex)
         {
-            if (matrix.GetLength(0) != column.Length)
-                throw new Exception("Non equal dimetions");
-
             for (var i = 0; i < column.Length; ++i)
             {
                 matrix[i, columnIndex] = column[i];

@@ -7,6 +7,7 @@ using WindowsFormsTemp.Calculator;
 using WindowsFormsTemp.Compression.CompressionCommons;
 using WindowsFormsTemp.Compression.Jpeg;
 using WindowsFormsTemp.Compression.Jpeg.Thresholders;
+using WindowsFormsTemp.Compression.Wavelet;
 using WindowsFormsTemp.Filters;
 using WindowsFormsTemp.ImagePrimitives;
 using WindowsFormsTemp.Properties;
@@ -103,6 +104,14 @@ namespace WindowsFormsTemp
         private void UpdateCheckBox()
         {
             currentPlainBitmap = initialPlainBitmap;
+
+            var by = WaveletCoder.Instance.Encode(currentPlainBitmap, new WaveletCoderSettings
+            {
+                Depth = 4,
+                ThinningMode = ThinningMode.None
+            });
+
+            currentPlainBitmap = WaveletCoder.Instance.Decode(by).ToRgbBitmap();
 
             if (JpegCheckBox.Checked)
             {
