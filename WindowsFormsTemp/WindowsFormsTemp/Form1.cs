@@ -105,13 +105,25 @@ namespace WindowsFormsTemp
         {
             currentPlainBitmap = initialPlainBitmap;
 
-            var by = WaveletCoder.Instance.Encode(currentPlainBitmap, new WaveletCoderSettings
+            if (WaveletCheckBox.Checked)
             {
-                Depth = 4,
-                ThinningMode = ThinningMode.None
-            });
+                var encodedBytes = WaveletCoder.Instance.Encode(currentPlainBitmap, new WaveletCoderSettings
+                {
+                    Depth = (int)WaveletDepthNumericUpDown1.Value,
+                    ThinningMode = ThinningMode.None,
+                    Order = int.Parse(WaveletOrderCombobox.Text),
+                    Threshold = (double)WaveletThresholdNumericUpDown.Value
+                });
 
-            currentPlainBitmap = WaveletCoder.Instance.Decode(by).ToRgbBitmap();
+                currentPlainBitmap = WaveletCoder.Instance.Decode(encodedBytes).ToRgbBitmap();
+
+                label19.Text = (imageSize / 1024.0).ToString("F");
+                label20.Text = (encodedBytes.Length / 1024.0).ToString("F");
+            }
+            else
+            {
+                
+            }
 
             if (JpegCheckBox.Checked)
             {
@@ -447,6 +459,26 @@ namespace WindowsFormsTemp
         }
 
         private void Div2CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void WaveletOrderCombobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void WaveletThresholdNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void WaveletCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCheckBox();
+        }
+
+        private void WaveletDepthNumericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             UpdateCheckBox();
         }

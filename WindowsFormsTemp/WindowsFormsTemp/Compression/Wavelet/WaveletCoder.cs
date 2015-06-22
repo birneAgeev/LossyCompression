@@ -21,9 +21,10 @@ namespace WindowsFormsTemp.Compression.Wavelet
 
             var result = new WaveletData
             {
-                Y = EncodeComponent(thinned.Y, settings.Depth),
-                Cb = EncodeComponent(thinned.Cb, settings.Depth),
-                Cr = EncodeComponent(thinned.Cr, settings.Depth)
+                Y = EncodeComponent(thinned.Y, settings.Depth, settings.Order, settings.Threshold),
+                Cb = EncodeComponent(thinned.Cb, settings.Depth, settings.Order, settings.Threshold),
+                Cr = EncodeComponent(thinned.Cr, settings.Depth, settings.Order, settings.Threshold),
+                Settings = settings
             };
 
             var stream = new MemoryStream();
@@ -43,34 +44,52 @@ namespace WindowsFormsTemp.Compression.Wavelet
             var stream = new MemoryStream(bytes);
 
             var waveletData = (WaveletData) formatter.Deserialize(stream);
+            var settings = waveletData.Settings;
 
-            var height = waveletData.Y.GetLength(0);
-            var width = waveletData.Y.GetLength(1);
-            var result = new PlainBitmap<YCrCbPixel>(width, height);
-
-            for (var i = 0; i < height; ++i)
+            var thinnerResult = new ThinnerResult
             {
-                for (var j = 0; j < height; ++j)
+                ImageData = new SeparatedYCrCb
                 {
-                    result.SetPixel(i, j, new YCrCbPixel
-                    {
-                        Y = ToByte(waveletData.Y[i, j]),
-                        Cr = ToByte(waveletData.Cr[i, j]),
-                        Cb = ToByte(waveletData.Cb[i, j])
-                    });
-                }
-            }
+                    Y = DecodeComponent(waveletData.Y, settings.Depth, settings.Order),
+                    Cr = DecodeComponent(waveletData.Cr, settings.Depth, settings.Order),
+                    Cb = DecodeComponent(waveletData.Cb, settings.Depth, settings.Order)
+                },
+                ThinningMode = settings.ThinningMode
+            };
+
+            var result = Thinner.Instance.Decompress(thinnerResult);
 
             return result;
         }
 
-        private static short[,] EncodeComponent(double[,] matrix, int depth)
+        private static double[,] DecodeComponent(short[,] component, int depth, int order)
+        {
+            var height = component.GetLength(0);
+            var width = component.GetLength(1);
+            var matrix = new double[height, width];
+
+            for (var i = 0; i < height; ++i)
+            {
+                for (var j = 0; j < width; ++j)
+                {
+                    matrix[i, j] = component[i, j];
+                }
+            }
+
+            for (var level = 0; level < depth; ++level)
+            {
+                WaveletTransformation.Instance.Inverse(matrix, width >> (depth - level - 1), height >> (depth - level - 1), order);
+            }
+            return matrix;
+        }
+
+        private static short[,] EncodeComponent(double[,] matrix, int depth, int order, double threshold)
         {
             var height = matrix.GetLength(0);
             var width = matrix.GetLength(1);
             for (var level = 0; level < depth; ++level)
             {
-                WaveletTransformation.Instance.Transform(matrix, width >> level, height >> level, 4);
+                WaveletTransformation.Instance.Transform(matrix, width >> level, height >> level, order);
             }
 
             var result = new short[height, width];
@@ -78,21 +97,11 @@ namespace WindowsFormsTemp.Compression.Wavelet
             {
                 for (var j = 0; j < width; ++j)
                 {
-                    result[i, j] = (short) Math.Round(matrix[i, j]);
+                    result[i, j] = (short) Math.Round(Math.Abs(matrix[i, j]) > threshold ? matrix[i, j] : 0.0);
                 }
             }
 
             return result;
-        }
-
-        private static byte ToByte(double a)
-        {
-            var integer = (int) Math.Round(a);
-            if (integer > 255)
-                return 255;
-            if (integer < 0)
-                return 0;
-            return (byte) integer;
         }
 
         [Serializable]
@@ -101,6 +110,7 @@ namespace WindowsFormsTemp.Compression.Wavelet
             public short[,] Y { get; set; }
             public short[,] Cr { get; set; }
             public short[,] Cb { get; set; }
+            public WaveletCoderSettings Settings { get; set; }
         }
     }
 }
