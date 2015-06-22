@@ -94,6 +94,8 @@ namespace WindowsFormsTemp.Compression.Wavelet
                 for (var j = 0; j < transform.Length; ++j)
                 {
                     var index = (i + j - delta + vector.Length)%vector.Length; //out of range
+                    while (index < 0)
+                        index += vector.Length;
                     sumLow += vector[index]*lowFilter[j];
                     sumHigh += vector[index]*highFilter[j];
                 }

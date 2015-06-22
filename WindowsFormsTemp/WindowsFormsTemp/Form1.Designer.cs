@@ -86,12 +86,18 @@
             this.ThinningModeComboBox = new System.Windows.Forms.ComboBox();
             this.JpegCheckBox = new System.Windows.Forms.CheckBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.WaveletDepthNumericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.WaveletDepthNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.WaveletCheckBox = new System.Windows.Forms.CheckBox();
             this.WaveletThresholdNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.WaveletOrderCombobox = new System.Windows.Forms.ComboBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.currentPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.initialPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uTrackBar)).BeginInit();
@@ -112,7 +118,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.YAlphaNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.YMaxCountNumericUpDown)).BeginInit();
             this.tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.WaveletDepthNumericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaveletDepthNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaveletThresholdNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -841,9 +847,15 @@
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage6.Controls.Add(this.label26);
+            this.tabPage6.Controls.Add(this.label25);
+            this.tabPage6.Controls.Add(this.label24);
+            this.tabPage6.Controls.Add(this.label23);
+            this.tabPage6.Controls.Add(this.label21);
+            this.tabPage6.Controls.Add(this.label22);
             this.tabPage6.Controls.Add(this.label20);
             this.tabPage6.Controls.Add(this.label19);
-            this.tabPage6.Controls.Add(this.WaveletDepthNumericUpDown1);
+            this.tabPage6.Controls.Add(this.WaveletDepthNumericUpDown);
             this.tabPage6.Controls.Add(this.WaveletCheckBox);
             this.tabPage6.Controls.Add(this.WaveletThresholdNumericUpDown);
             this.tabPage6.Controls.Add(this.WaveletOrderCombobox);
@@ -854,18 +866,37 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Wavelet";
             // 
-            // WaveletDepthNumericUpDown1
+            // label20
             // 
-            this.WaveletDepthNumericUpDown1.Location = new System.Drawing.Point(287, 113);
-            this.WaveletDepthNumericUpDown1.Name = "WaveletDepthNumericUpDown1";
-            this.WaveletDepthNumericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.WaveletDepthNumericUpDown1.TabIndex = 3;
-            this.WaveletDepthNumericUpDown1.Value = new decimal(new int[] {
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(160, 138);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(41, 13);
+            this.label20.TabIndex = 5;
+            this.label20.Text = "label20";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(160, 113);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(41, 13);
+            this.label19.TabIndex = 4;
+            this.label19.Text = "label19";
+            // 
+            // WaveletDepthNumericUpDown
+            // 
+            this.WaveletDepthNumericUpDown.Enabled = false;
+            this.WaveletDepthNumericUpDown.Location = new System.Drawing.Point(307, 131);
+            this.WaveletDepthNumericUpDown.Name = "WaveletDepthNumericUpDown";
+            this.WaveletDepthNumericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.WaveletDepthNumericUpDown.TabIndex = 3;
+            this.WaveletDepthNumericUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.WaveletDepthNumericUpDown1.ValueChanged += new System.EventHandler(this.WaveletDepthNumericUpDown1_ValueChanged);
+            this.WaveletDepthNumericUpDown.ValueChanged += new System.EventHandler(this.WaveletDepthNumericUpDown1_ValueChanged);
             // 
             // WaveletCheckBox
             // 
@@ -881,7 +912,8 @@
             // WaveletThresholdNumericUpDown
             // 
             this.WaveletThresholdNumericUpDown.DecimalPlaces = 1;
-            this.WaveletThresholdNumericUpDown.Location = new System.Drawing.Point(287, 63);
+            this.WaveletThresholdNumericUpDown.Enabled = false;
+            this.WaveletThresholdNumericUpDown.Location = new System.Drawing.Point(307, 81);
             this.WaveletThresholdNumericUpDown.Name = "WaveletThresholdNumericUpDown";
             this.WaveletThresholdNumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.WaveletThresholdNumericUpDown.TabIndex = 1;
@@ -889,6 +921,7 @@
             // 
             // WaveletOrderCombobox
             // 
+            this.WaveletOrderCombobox.Enabled = false;
             this.WaveletOrderCombobox.FormattingEnabled = true;
             this.WaveletOrderCombobox.Items.AddRange(new object[] {
             "2",
@@ -896,30 +929,66 @@
             "6",
             "8",
             "20"});
-            this.WaveletOrderCombobox.Location = new System.Drawing.Point(79, 63);
+            this.WaveletOrderCombobox.Location = new System.Drawing.Point(306, 27);
             this.WaveletOrderCombobox.Name = "WaveletOrderCombobox";
             this.WaveletOrderCombobox.Size = new System.Drawing.Size(121, 21);
             this.WaveletOrderCombobox.TabIndex = 0;
             this.WaveletOrderCombobox.Text = "2";
             this.WaveletOrderCombobox.SelectedIndexChanged += new System.EventHandler(this.WaveletOrderCombobox_SelectedIndexChanged);
             // 
-            // label19
+            // label21
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(76, 104);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(41, 13);
-            this.label19.TabIndex = 4;
-            this.label19.Text = "label19";
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(113, 113);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(41, 13);
+            this.label21.TabIndex = 17;
+            this.label21.Text = "Before:";
             // 
-            // label20
+            // label22
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(76, 136);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(41, 13);
-            this.label20.TabIndex = 5;
-            this.label20.Text = "label20";
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(41, 113);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(54, 13);
+            this.label22.TabIndex = 16;
+            this.label22.Text = "Size in Kb";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(113, 138);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(32, 13);
+            this.label23.TabIndex = 18;
+            this.label23.Text = "After:";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(304, 11);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(33, 13);
+            this.label24.TabIndex = 19;
+            this.label24.Text = "Order";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(303, 65);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(54, 13);
+            this.label25.TabIndex = 20;
+            this.label25.Text = "Threshold";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(304, 113);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(36, 13);
+            this.label26.TabIndex = 21;
+            this.label26.Text = "Depth";
             // 
             // MainForm
             // 
@@ -965,7 +1034,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.YMaxCountNumericUpDown)).EndInit();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.WaveletDepthNumericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaveletDepthNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaveletThresholdNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1035,9 +1104,15 @@
         private System.Windows.Forms.NumericUpDown WaveletThresholdNumericUpDown;
         private System.Windows.Forms.ComboBox WaveletOrderCombobox;
         private System.Windows.Forms.CheckBox WaveletCheckBox;
-        private System.Windows.Forms.NumericUpDown WaveletDepthNumericUpDown1;
+        private System.Windows.Forms.NumericUpDown WaveletDepthNumericUpDown;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
     }
 }
 

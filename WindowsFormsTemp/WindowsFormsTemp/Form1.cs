@@ -107,9 +107,24 @@ namespace WindowsFormsTemp
 
             if (WaveletCheckBox.Checked)
             {
+                WaveletOrderCombobox.Enabled = true;
+                WaveletThresholdNumericUpDown.Enabled = true;
+                WaveletDepthNumericUpDown.Enabled = true;
+
+
+                var maxSize = 1;
+                var maxDepth = 0;
+                while (maxSize < Math.Min(initialPlainBitmap.Height, initialPlainBitmap.Width))
+                {
+                    maxSize <<= 1;
+                    ++maxDepth;
+                }
+
+                WaveletDepthNumericUpDown.Maximum = maxDepth;
+
                 var encodedBytes = WaveletCoder.Instance.Encode(currentPlainBitmap, new WaveletCoderSettings
                 {
-                    Depth = (int)WaveletDepthNumericUpDown1.Value,
+                    Depth = (int)WaveletDepthNumericUpDown.Value,
                     ThinningMode = ThinningMode.None,
                     Order = int.Parse(WaveletOrderCombobox.Text),
                     Threshold = (double)WaveletThresholdNumericUpDown.Value
@@ -122,7 +137,12 @@ namespace WindowsFormsTemp
             }
             else
             {
-                
+                label19.Text = Resources.MainForm_UpdateCheckBox__;
+                label20.Text = Resources.MainForm_UpdateCheckBox__;
+
+                WaveletOrderCombobox.Enabled = false;
+                WaveletThresholdNumericUpDown.Enabled = false;
+                WaveletDepthNumericUpDown.Enabled = false;
             }
 
             if (JpegCheckBox.Checked)
